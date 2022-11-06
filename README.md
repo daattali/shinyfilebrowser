@@ -130,3 +130,5 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+(undocumented) for path_browser, providing a named list will use the names as what the use sees and the values as the return value. It also forces the list to be flat and you cannot navigate beyond the top level.

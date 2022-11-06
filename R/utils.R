@@ -149,3 +149,9 @@ make_breadcrumbs <- function(path, include_root = TRUE) {
   }
   parts
 }
+
+fill_names <- function(x) {
+  idx <- which(names(x) == "")
+  names(x)[idx] <- x[idx]
+  x
+}

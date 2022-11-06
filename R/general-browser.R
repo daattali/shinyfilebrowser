@@ -53,10 +53,15 @@ general_browser_server <- function(
       show_path_r <- make_reactive(show_path)
       show_icons_r <- make_reactive(show_icons)
 
+      values_asis <- reactiveVal(NULL)
+
       observeEvent(path_r(), {
         if (real_fs) {
           initial_path <- make_path(path_r())
         } else {
+          if (!is.null(names(path_r()))) {
+            values_asis(fill_names(path_r()))
+          }
           initial_path <- ""
         }
         wd(initial_path)
@@ -128,7 +133,11 @@ general_browser_server <- function(
         if (real_fs) {
           get_files_dirs_real(path = wd(), extensions = extensions_r(), hidden = include_hidden, root = root_r())
         } else {
-          get_files_dirs_fake(path = wd(), paths = path_r())
+          if (is.null(values_asis())) {
+            get_files_dirs_fake(path = wd(), paths = path_r())
+          } else {
+            list(files = values_asis(), dirs = character(0))
+          }
         }
       })
 
@@ -154,7 +163,9 @@ general_browser_server <- function(
             size <- NULL
           }
 
-          if (show_extension) {
+          if (!is.null(values_asis())) {
+            file_text <- names(which(values_asis() == file))[1]
+          } else if (show_extension) {
             file_text <- basename(file)
           } else {
             file_text <- tools::file_path_sans_ext(basename(file))
