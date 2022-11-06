@@ -48,7 +48,7 @@ get_files_dirs_fake <- function(path, paths) {
   paths_in_wd <- substring(paths_in_wd, nchar(path) + 1)
 
   parts <- strsplit(paths_in_wd, "/")
-  all_files <- unlist(lapply(parts, head, 1))
+  all_files <- unlist(lapply(parts, utils::head, 1))
   files_idx <- lengths(parts) == 1
   files <- unique(all_files[files_idx])
   dirs <- unique(all_files[!files_idx])
@@ -87,9 +87,9 @@ create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path
   }
 
   if (!is.null(meta)) {
-    meta <- tagList(
+    meta <- shiny::tagList(
       "-",
-      span(meta, class = "file-meta")
+      shiny::span(meta, class = "file-meta")
     )
   }
 
@@ -106,10 +106,7 @@ create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path
 }
 
 create_file_onclick <- function(new_path, ns = shiny::NS(NULL)) {
-  glue::glue(
-    "Shiny.setInputValue('{{ ns('file_clicked') }}', '{{ new_path }}', {priority: 'event'})",
-    .open = "{{", .close = "}}"
-  )
+  paste0("Shiny.setInputValue('", ns('file_clicked'), "', '", new_path, "', {priority: 'event'})")
 }
 
 make_breadcrumbs <- function(path, include_root = TRUE) {

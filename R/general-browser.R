@@ -40,23 +40,23 @@ general_browser_server <- function(
     text_parent = NULL,
     text_empty = NULL
 ) {
-  moduleServer(
+  shiny::moduleServer(
     id,
     function(input, output, session) {
 
       ns <- session$ns
 
-      wd <- reactiveVal(NULL)
-      selected <- reactiveVal(NULL)
+      wd <- shiny::reactiveVal(NULL)
+      selected <- shiny::reactiveVal(NULL)
       path_r <- make_reactive(path)
       extensions_r <- make_reactive(extensions)
       root_r <- make_reactive(root)
       show_path_r <- make_reactive(show_path)
       show_icons_r <- make_reactive(show_icons)
 
-      values_asis <- reactiveVal(NULL)
+      values_asis <- shiny::reactiveVal(NULL)
 
-      observeEvent(path_r(), {
+      shiny::observeEvent(path_r(), {
         if (real_fs) {
           initial_path <- make_path(path_r())
         } else {
@@ -95,7 +95,7 @@ general_browser_server <- function(
         }
       }
 
-      output$current_wd <- renderUI({
+      output$current_wd <- shiny::renderUI({
         if (!show_path_r()) return()
 
         crumbs <- make_breadcrumbs(wd())
@@ -110,19 +110,19 @@ general_browser_server <- function(
             class <- paste(class, "file-breadcrumb-clickable")
           }
 
-          tagList(
-            if (idx > 1) span(HTML("&rsaquo;"), class = "file-breadcrumb-separator"),
-            span(
+          shiny::tagList(
+            if (idx > 1) shiny::span(shiny::HTML("&rsaquo;"), class = "file-breadcrumb-separator"),
+            shiny::span(
               unname(crumbs[idx]),
               onclick = create_file_onclick(names(crumbs[idx]), ns = ns),
               class = class
             )
           )
         })
-        div(crumbs_html, class = "current-wd-breadcrumbs")
+        shiny::div(crumbs_html, class = "current-wd-breadcrumbs")
       })
 
-      at_root <- reactive({
+      at_root <- shiny::reactive({
         if (real_fs) {
           !is.null(wd()) && !is.null(root_r()) && make_path(wd()) == make_path(root_r())
         } else {
@@ -130,7 +130,7 @@ general_browser_server <- function(
         }
       })
 
-      get_files_dirs <- reactive({
+      get_files_dirs <- shiny::reactive({
         if (real_fs) {
           get_files_dirs_real(path = wd(), extensions = extensions_r(), hidden = include_hidden, root = root_r())
         } else {
@@ -142,7 +142,7 @@ general_browser_server <- function(
         }
       })
 
-      output$file_list <- renderUI({
+      output$file_list <- shiny::renderUI({
         files_dirs <- get_files_dirs()
 
         dirs_rows <- lapply(files_dirs$dirs, function(dir) {
@@ -184,7 +184,7 @@ general_browser_server <- function(
           parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), text_parent, show_icons = show_icons_r(), ns = ns)
         }
 
-        tagList(
+        shiny::tagList(
           parent_row,
           dirs_rows,
           files_rows,
@@ -192,7 +192,7 @@ general_browser_server <- function(
         )
       })
 
-      observeEvent(input$file_clicked, {
+      shiny::observeEvent(input$file_clicked, {
         if (!is_legal_path(input$file_clicked)) {
           return()
         }
