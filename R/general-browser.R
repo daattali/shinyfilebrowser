@@ -27,18 +27,19 @@ general_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE
 
 general_browser_server <- function(
     real_fs,
+    return_path = TRUE,
     id,
     path,
     extensions = NULL,
     root = NULL,
-    include_hidden = NULL,
-    include_empty = NULL,
-    show_path = NULL,
-    show_extension = NULL,
-    show_size = NULL,
-    show_icons = NULL,
-    text_parent = NULL,
-    text_empty = NULL
+    include_hidden = FALSE,
+    include_empty = TRUE,
+    show_path = TRUE,
+    show_extension = TRUE,
+    show_size = TRUE,
+    show_icons = TRUE,
+    text_parent = "..",
+    text_empty = "No files here"
 ) {
   shiny::moduleServer(
     id,
@@ -63,7 +64,7 @@ general_browser_server <- function(
 
       values_asis <- shiny::reactiveVal(NULL)
 
-      shiny::observeEvent(path_r(), {
+      shiny::observeEvent(path_r(), ignoreNULL = FALSE, {
         if (real_fs) {
           initial_path <- make_path(path_r())
         } else {
@@ -145,7 +146,9 @@ general_browser_server <- function(
         if (real_fs) {
           get_files_dirs_real(path = wd(), extensions = extensions_r(), hidden = include_hidden_r(), root = root_r())
         } else {
-          if (is.null(values_asis())) {
+          if (is.null(path_r())) {
+            list(files = character(0), dirs = character(0))
+          } else if (is.null(values_asis())) {
             get_files_dirs_fake(path = wd(), paths = path_r())
           } else {
             list(files = values_asis(), dirs = character(0))
@@ -219,10 +222,14 @@ general_browser_server <- function(
         }
       })
 
-      return(list(
-        path = wd,
-        selected = selected
-      ))
+      if (return_path) {
+        return(list(
+          path = wd,
+          selected = selected
+        ))
+      } else {
+        return(selected)
+      }
     }
   )
 }

@@ -15,7 +15,7 @@ path_browser_server(
   show_extension = TRUE,
   show_icons = TRUE,
   text_parent = "..",
-  text_empty = "No files here"
+  text_empty = "No items here"
 )
 }
 \arguments{
@@ -45,8 +45,8 @@ path separator, but do not use \code{/} as a leading slash.}
 \value{
 List with reactive elements:
 \itemize{
-\item selected: The full normalized path of the selected path (\code{NULL} before a path is selected)
-\item path: The full normalized path that is currently displayed in the path browser
+\item selected: The selected path (\code{NULL} before a path is selected)
+\item path: The path that is currently displayed in the path browser
 }
 }
 \description{

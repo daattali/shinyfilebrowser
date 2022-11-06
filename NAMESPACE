@@ -2,5 +2,7 @@
 
 export(file_browser_server)
 export(file_browser_ui)
+export(list_selector_server)
+export(list_selector_ui)
 export(path_browser_server)
 export(path_browser_ui)

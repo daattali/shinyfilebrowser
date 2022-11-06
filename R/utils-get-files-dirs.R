@@ -29,6 +29,9 @@ get_files_dirs_real <- function(path, extensions = NULL, hidden = FALSE, root = 
 }
 
 get_files_dirs_fake <- function(path, paths) {
+  if (length(paths) == 0) {
+    return()
+  }
   if (path != "") {
     path <- paste0(path, "/")
   }

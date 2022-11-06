@@ -25,8 +25,8 @@ path_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
 #' @param paths List of paths that the user can browse and select from. Use `/` as a
 #' path separator, but do not use `/` as a leading slash.
 #' @return List with reactive elements:
-#'   - selected: The full normalized path of the selected path (`NULL` before a path is selected)
-#'   - path: The full normalized path that is currently displayed in the path browser
+#'   - selected: The selected path (`NULL` before a path is selected)
+#'   - path: The path that is currently displayed in the path browser
 #' @export
 path_browser_server <- function(
     id,
@@ -35,10 +35,10 @@ path_browser_server <- function(
     show_extension = TRUE,
     show_icons = TRUE,
     text_parent = "..",
-    text_empty = "No files here"
+    text_empty = "No items here"
 ) {
   general_browser_server(
-    real_fs = FALSE,
+    real_fs = FALSE, return_path = TRUE,
     id = id,
     path = paths,
     show_path = show_path, show_extension = show_extension, show_icons = show_icons,

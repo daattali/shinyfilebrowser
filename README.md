@@ -1,6 +1,6 @@
 # shinyfilebrowser
 
-**Work in progress**
+**Work in progress** (Need to document the feature of named lists and mention that it forces the list to be flat, also document no leading slashes)
 
 ## Example 1: file browser from the current working directory, the user cannot navigate above the working directory.
 
@@ -56,24 +56,24 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-## Example 3: path browser used to select an item from a list
+## Example 3: list selector used to select an item from a list
 
 ```r
 library(shiny)
 library(shinyfilebrowser)
 
-paths <- c("Bob", "Mary", "Dean", "John", "Julie")
+names <- c("Bob", "Mary", "Dean", "John", "Julie")
 
 ui <- fluidPage(
   "Selected:",
   textOutput("selected", inline = TRUE), br(),
-  path_browser_ui("paths", bigger = TRUE)
+  list_selector_ui("names")
 )
 
 server <- function(input, output, session) {
-  pathbrowser <- path_browser_server("paths", paths = paths, show_path = FALSE, show_icons = FALSE)
+  listsel <- list_selector_server("names", choices = names)
   output$selected <- renderText({
-    pathbrowser$selected()
+    listsel$selected()
   })
 }
 
@@ -182,18 +182,18 @@ shinyApp(ui, server)
 library(shiny)
 library(shinyfilebrowser)
 
-paths <- c("Number One" = "one", "Number Two" = "two", "three")
+nums <- c("Number One" = "one", "Number Two" = "two", "three")
 
 ui <- fluidPage(
   "Selected:",
   textOutput("selected", inline = TRUE), br(),
-  path_browser_ui("paths", bigger = TRUE)
+  list_selector_ui("nums")
 )
 
 server <- function(input, output, session) {
-  pathbrowser <- path_browser_server("paths", paths = paths, show_path = FALSE, show_icons = FALSE)
+  nums <- list_selector_server("nums", choices = nums)
   output$selected <- renderText({
-    pathbrowser$selected()
+    nums$selected()
   })
 }
 

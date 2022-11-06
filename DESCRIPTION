@@ -10,8 +10,8 @@ Authors@R: c(
 Description: Display a simple file browser of the server-side file system in
     'Shiny' apps. The file browser also supported "fake" file systems by
     allowing you to browse any set of arbitrary paths, effectively allowing
-    you to navigate a tree structure. This file browser can also be used to
-    select an item from a list.
+    you to navigate a tree structure. Finally, a list selector is also
+    available, allowing a user to select an item from a list.
 URL: https://github.com/daattali/shinyfilebrowser
 BugReports: https://github.com/daattali/shinyfilebrowser/issues
 Depends:

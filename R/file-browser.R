@@ -52,7 +52,7 @@ file_browser_server <- function(
     text_empty = "No files here"
 ) {
   general_browser_server(
-    real_fs = TRUE,
+    real_fs = TRUE, return_path = TRUE,
     id = id,
     path = path,
     extensions = extensions, root = root,
