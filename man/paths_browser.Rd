@@ -14,7 +14,8 @@ path_browser_server(
   show_path = TRUE,
   show_extension = TRUE,
   show_icons = TRUE,
-  parent_text = ".."
+  text_parent = "..",
+  text_empty = "No files here"
 )
 }
 \arguments{
@@ -37,13 +38,15 @@ path separator. Any leading slashes are automatically removed.}
 
 \item{show_icons}{(boolean) If \code{TRUE}, show icons on the left column beside the file names.}
 
-\item{parent_text}{The text to use to indicate the parent directory.}
+\item{text_parent}{The text to use to indicate the parent directory.}
+
+\item{text_empty}{The text show when a folder has nothing to show.}
 }
 \value{
 List with reactive elements:
 \itemize{
-\item selected: The full normalized path of the selected file (\code{NULL} before a file is selected)
-\item path: The full normalized path that is currently displayed in the file browser
+\item selected: The full normalized path of the selected path (\code{NULL} before a path is selected)
+\item path: The full normalized path that is currently displayed in the path browser
 }
 }
 \description{

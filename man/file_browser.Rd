@@ -19,7 +19,8 @@ file_browser_server(
   show_icons = TRUE,
   include_hidden = FALSE,
   include_empty = TRUE,
-  parent_text = ".."
+  text_parent = "..",
+  text_empty = "No files here"
 )
 }
 \arguments{
@@ -54,7 +55,9 @@ Use \code{NULL} to allow the user to navigate the entire filesystem.}
 
 \item{include_empty}{(boolean) If \code{TRUE}, show empty files (files with size 0 bytes).}
 
-\item{parent_text}{The text to use to indicate the parent directory.}
+\item{text_parent}{The text to use to indicate the parent directory.}
+
+\item{text_empty}{The text show when a folder has nothing to show.}
 }
 \value{
 List with reactive elements:

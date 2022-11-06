@@ -37,7 +37,8 @@ general_browser_server <- function(
     show_extension = NULL,
     show_size = NULL,
     show_icons = NULL,
-    parent_text = NULL
+    text_parent = NULL,
+    text_empty = NULL
 ) {
   moduleServer(
     id,
@@ -180,14 +181,14 @@ general_browser_server <- function(
         if (at_root()) {
           parent_row <- NULL
         } else {
-          parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), parent_text, show_icons = show_icons_r(), ns = ns)
+          parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), text_parent, show_icons = show_icons_r(), ns = ns)
         }
 
         tagList(
           parent_row,
           dirs_rows,
           files_rows,
-          if (length(dirs_rows) == 0 && length(files_rows) == 0) div("No files here")
+          if (length(dirs_rows) == 0 && length(files_rows) == 0) div(text_empty)
         )
       })
 

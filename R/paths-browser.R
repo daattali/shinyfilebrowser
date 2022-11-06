@@ -19,15 +19,12 @@ path_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
 }
 
 #' @rdname paths_browser
+#' @inheritParams file_browser_server
 #' @param paths List of paths that the user can browse and select from. Use `/` as a
 #' path separator. Any leading slashes are automatically removed.
-#' @param show_path (boolean) If `TRUE`, show the current path above the browser.
-#' @param show_extension (boolean) If `TRUE`, show file extensions in the file names.
-#' @param show_icons (boolean) If `TRUE`, show icons on the left column beside the file names.
-#' @param parent_text The text to use to indicate the parent directory.
 #' @return List with reactive elements:
-#'   - selected: The full normalized path of the selected file (`NULL` before a file is selected)
-#'   - path: The full normalized path that is currently displayed in the file browser
+#'   - selected: The full normalized path of the selected path (`NULL` before a path is selected)
+#'   - path: The full normalized path that is currently displayed in the path browser
 #' @export
 path_browser_server <- function(
     id,
@@ -35,7 +32,8 @@ path_browser_server <- function(
     show_path = TRUE,
     show_extension = TRUE,
     show_icons = TRUE,
-    parent_text = ".."
+    text_parent = "..",
+    text_empty = "No files here"
 ) {
   paths <- sub("^/+", "", paths)
 
@@ -44,6 +42,6 @@ path_browser_server <- function(
     id = id,
     path = paths,
     show_path = show_path, show_extension = show_extension, show_icons = show_icons,
-    parent_text = parent_text
+    text_parent = text_parent, text_empty = text_empty
   )
 }

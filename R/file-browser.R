@@ -29,7 +29,8 @@ file_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
 #' @param show_icons (boolean) If `TRUE`, show icons on the left column beside the file names.
 #' @param include_hidden (boolean) If `TRUE`, show hidden files and folders.
 #' @param include_empty (boolean) If `TRUE`, show empty files (files with size 0 bytes).
-#' @param parent_text The text to use to indicate the parent directory.
+#' @param text_parent The text to use to indicate the parent directory.
+#' @param text_empty The text show when a folder has nothing to show.
 #' @return List with reactive elements:
 #'   - selected: The full normalized path of the selected file (`NULL` before a file is selected)
 #'   - path: The full normalized path that is currently displayed in the file browser
@@ -45,7 +46,8 @@ file_browser_server <- function(
     show_icons = TRUE,
     include_hidden = FALSE,
     include_empty = TRUE,
-    parent_text = ".."
+    text_parent = "..",
+    text_empty = "No files here"
 ) {
   general_browser_server(
     real_fs = TRUE,
@@ -54,6 +56,6 @@ file_browser_server <- function(
     extensions = extensions, root = root,
     include_hidden = include_hidden, include_empty = include_empty,
     show_path = show_path, show_extension = show_extension, show_size = show_size, show_icons = show_icons,
-    parent_text = parent_text
+    text_parent = text_parent, text_empty = text_empty
   )
 }
