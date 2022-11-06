@@ -87,11 +87,6 @@ test_that("make_breadcrumbs works", {
 
   expect_identical(
     make_breadcrumbs("a/b/c/d"),
-    make_breadcrumbs("a/b/c/d//")
-  )
-
-  expect_identical(
-    make_breadcrumbs("a/b/c/d"),
     setNames(c("a", "b", "c", "d"), c("a", "a/b", "a/b/c", "a/b/c/d"))
   )
 
@@ -114,6 +109,18 @@ test_that("make_breadcrumbs works", {
     make_breadcrumbs("C/D/E"),
     setNames(c("C", "D", "E"), c("C", "C/D", "C/D/E"))
   )
+
+  expect_identical(
+    make_breadcrumbs("a/a/a/a"),
+    setNames(c("a", "a", "a", "a"), c("a", "a/a", "a/a/a", "a/a/a/a"))
+  )
+
+  expect_identical(
+    make_breadcrumbs("/a/a/a/a"),
+    setNames(c("/", "a", "a", "a", "a"), c("/", "/a", "/a/a", "/a/a/a", "/a/a/a/a"))
+  )
+
+  skip_on_os(c("mac", "linux", "solaris"))
 
   expect_identical(
     make_breadcrumbs("C:/D/E"),
