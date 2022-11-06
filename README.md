@@ -1,6 +1,8 @@
 # shinyfilebrowser
 
-**Work in progress** (Need to document the feature of named lists and mention that it forces the list to be flat, also document no leading slashes)
+**Fully functional, but the documentation is a work in progress**
+
+There are three modules in this package: file_browser is for browsing a file system, path_browser is for browsing an arbitrary set of paths, and list_selector is to select an item from a list. All use the same interface but have slightly different use cases.
 
 ## Example 1: file browser from the current working directory, the user cannot navigate above the working directory.
 
