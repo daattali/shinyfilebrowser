@@ -30,13 +30,13 @@ path_browser_server(
 \item{bigger}{(boolean) If \code{TRUE}, make the rows larger and more spacious.}
 
 \item{paths}{List of paths that the user can browse and select from. Use \code{/} as a
-path separator. Any leading slashes are automatically removed.}
+path separator, but do not use \code{/} as a leading slash.}
 
-\item{show_path}{(boolean) If \code{TRUE}, show the current path above the browser.}
+\item{show_path}{If \code{TRUE}, show the current path above the browser.}
 
-\item{show_extension}{(boolean) If \code{TRUE}, show file extensions in the file names.}
+\item{show_extension}{If \code{TRUE}, show file extensions in the file names.}
 
-\item{show_icons}{(boolean) If \code{TRUE}, show icons on the left column beside the file names.}
+\item{show_icons}{If \code{TRUE}, show icons on the left column beside the file names.}
 
 \item{text_parent}{The text to use to indicate the parent directory.}
 
@@ -52,5 +52,7 @@ List with reactive elements:
 \description{
 Display a simple path browser that allows the user to browse paths and
 select a path. This is essentially equivalent to allowing the user to
-navigate a tree structure. The path browser can also be used as a list selector.
+navigate a tree structure. The path browser can also be used as a list selector.\cr\cr
+Note that all of the server arguments (except \code{id}) accept either reactive
+values or regular values.
 }

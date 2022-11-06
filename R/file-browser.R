@@ -1,6 +1,8 @@
 #' File browser
 #'
-#' Display a simple file browser of the server-side file system.
+#' Display a simple file browser of the server-side file system.\cr\cr
+#' Note that all of the server arguments (except `id`) accept either reactive
+#' values or regular values.
 #' @param id Unique ID for the module
 #' @name file_browser
 NULL
@@ -17,18 +19,18 @@ file_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
 }
 
 #' @rdname file_browser
-#' @param path (reactive or static) The initial path the file browser should show.
-#' @param extensions (reactive or static) List of file extensions that should be shown.
+#' @param path The initial path the file browser should show.
+#' @param extensions List of file extensions that should be shown.
 #' If `NULL`, all file types are shown.
 #' @param root The path that should be considered root, which means that the user cannot
 #' navigate to any parent of this root. By default, the `path` parameter acts as the root.
 #' Use `NULL` to allow the user to navigate the entire filesystem.
-#' @param show_path (boolean) If `TRUE`, show the current path above the browser.
-#' @param show_extension (boolean) If `TRUE`, show file extensions in the file names.
-#' @param show_size (boolean) If `TRUE`, show file sizes along the file names.
-#' @param show_icons (boolean) If `TRUE`, show icons on the left column beside the file names.
-#' @param include_hidden (boolean) If `TRUE`, show hidden files and folders.
-#' @param include_empty (boolean) If `TRUE`, show empty files (files with size 0 bytes).
+#' @param show_path If `TRUE`, show the current path above the browser.
+#' @param show_extension If `TRUE`, show file extensions in the file names.
+#' @param show_size If `TRUE`, show file sizes along the file names.
+#' @param show_icons If `TRUE`, show icons on the left column beside the file names.
+#' @param include_hidden If `TRUE`, show hidden files and folders.
+#' @param include_empty If `TRUE`, show empty files (files with size 0 bytes).
 #' @param text_parent The text to use to indicate the parent directory.
 #' @param text_empty The text show when a folder has nothing to show.
 #' @return List with reactive elements:

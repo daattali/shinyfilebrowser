@@ -34,26 +34,26 @@ file_browser_server(
 
 \item{bigger}{(boolean) If \code{TRUE}, make the rows larger and more spacious.}
 
-\item{path}{(reactive or static) The initial path the file browser should show.}
+\item{path}{The initial path the file browser should show.}
 
-\item{extensions}{(reactive or static) List of file extensions that should be shown.
+\item{extensions}{List of file extensions that should be shown.
 If \code{NULL}, all file types are shown.}
 
 \item{root}{The path that should be considered root, which means that the user cannot
 navigate to any parent of this root. By default, the \code{path} parameter acts as the root.
 Use \code{NULL} to allow the user to navigate the entire filesystem.}
 
-\item{show_path}{(boolean) If \code{TRUE}, show the current path above the browser.}
+\item{show_path}{If \code{TRUE}, show the current path above the browser.}
 
-\item{show_extension}{(boolean) If \code{TRUE}, show file extensions in the file names.}
+\item{show_extension}{If \code{TRUE}, show file extensions in the file names.}
 
-\item{show_size}{(boolean) If \code{TRUE}, show file sizes along the file names.}
+\item{show_size}{If \code{TRUE}, show file sizes along the file names.}
 
-\item{show_icons}{(boolean) If \code{TRUE}, show icons on the left column beside the file names.}
+\item{show_icons}{If \code{TRUE}, show icons on the left column beside the file names.}
 
-\item{include_hidden}{(boolean) If \code{TRUE}, show hidden files and folders.}
+\item{include_hidden}{If \code{TRUE}, show hidden files and folders.}
 
-\item{include_empty}{(boolean) If \code{TRUE}, show empty files (files with size 0 bytes).}
+\item{include_empty}{If \code{TRUE}, show empty files (files with size 0 bytes).}
 
 \item{text_parent}{The text to use to indicate the parent directory.}
 
@@ -67,5 +67,7 @@ List with reactive elements:
 }
 }
 \description{
-Display a simple file browser of the server-side file system.
+Display a simple file browser of the server-side file system.\cr\cr
+Note that all of the server arguments (except \code{id}) accept either reactive
+values or regular values.
 }

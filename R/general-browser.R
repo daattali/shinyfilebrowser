@@ -48,11 +48,18 @@ general_browser_server <- function(
 
       wd <- shiny::reactiveVal(NULL)
       selected <- shiny::reactiveVal(NULL)
+
       path_r <- make_reactive(path)
       extensions_r <- make_reactive(extensions)
       root_r <- make_reactive(root)
+      include_hidden_r <- make_reactive(include_hidden)
+      include_empty_r <- make_reactive(include_empty)
       show_path_r <- make_reactive(show_path)
+      show_extension_r <- make_reactive(show_extension)
+      show_size_r <- make_reactive(show_size)
       show_icons_r <- make_reactive(show_icons)
+      text_parent_r <- make_reactive(text_parent)
+      text_empty_r <- make_reactive(text_empty)
 
       values_asis <- shiny::reactiveVal(NULL)
 
@@ -60,7 +67,11 @@ general_browser_server <- function(
         if (real_fs) {
           initial_path <- make_path(path_r())
         } else {
-          if (!is.null(names(path_r()))) {
+          if (is.null(names(path_r()))) {
+            if (any(grepl("^/+", path_r()))) {
+              stop("Paths should not begin with a slash")
+            }
+          } else {
             values_asis(fill_names(path_r()))
           }
           initial_path <- ""
@@ -132,7 +143,7 @@ general_browser_server <- function(
 
       get_files_dirs <- shiny::reactive({
         if (real_fs) {
-          get_files_dirs_real(path = wd(), extensions = extensions_r(), hidden = include_hidden, root = root_r())
+          get_files_dirs_real(path = wd(), extensions = extensions_r(), hidden = include_hidden_r(), root = root_r())
         } else {
           if (is.null(values_asis())) {
             get_files_dirs_fake(path = wd(), paths = path_r())
@@ -151,11 +162,11 @@ general_browser_server <- function(
         files_rows <- lapply(files_dirs$files, function(file) {
           if (real_fs) {
             size <- suppressWarnings(file.info(file)$size)
-            if (size == 0 && !include_empty) {
+            if (size == 0 && !include_empty_r()) {
               return(NULL)
             }
 
-            if (show_size) {
+            if (show_size_r()) {
               size <- natural_size(size)
             } else {
               size <- NULL
@@ -166,7 +177,7 @@ general_browser_server <- function(
 
           if (!is.null(values_asis())) {
             file_text <- names(which(values_asis() == file))[1]
-          } else if (show_extension) {
+          } else if (show_extension_r()) {
             file_text <- basename(file)
           } else {
             file_text <- tools::file_path_sans_ext(basename(file))
@@ -181,14 +192,14 @@ general_browser_server <- function(
         if (at_root()) {
           parent_row <- NULL
         } else {
-          parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), text_parent, show_icons = show_icons_r(), ns = ns)
+          parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), text_parent_r(), show_icons = show_icons_r(), ns = ns)
         }
 
         shiny::tagList(
           parent_row,
           dirs_rows,
           files_rows,
-          if (length(dirs_rows) == 0 && length(files_rows) == 0) shiny::div(text_empty)
+          if (length(dirs_rows) == 0 && length(files_rows) == 0) shiny::div(text_empty_r())
         )
       })
 
