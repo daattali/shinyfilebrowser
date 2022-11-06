@@ -8,7 +8,13 @@
 \usage{
 path_browser_ui(id, height = NULL)
 
-path_browser_server(id, paths, show_extension = TRUE, parent_text = "..")
+path_browser_server(
+  id,
+  paths,
+  show_path = TRUE,
+  show_extension = TRUE,
+  parent_text = ".."
+)
 }
 \arguments{
 \item{id}{Unique ID for the module}
@@ -18,6 +24,8 @@ path_browser_server(id, paths, show_extension = TRUE, parent_text = "..")
 
 \item{paths}{List of paths that the user can browse and select from. Use \code{/} as a
 path separator. Any leading slashes are automatically removed.}
+
+\item{show_path}{(boolean) If \code{TRUE}, show the current path above the browser.}
 
 \item{show_extension}{(boolean) If \code{TRUE}, show file extensions in the file names.}
 

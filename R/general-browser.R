@@ -4,8 +4,7 @@ FILEBROWSER_TYPE_FILE <- "file"
 FILEBROWSER_TYPES <- c(FILEBROWSER_TYPE_PARENT, FILEBROWSER_TYPE_DIR, FILEBROWSER_TYPE_FILE)
 FILEBROWSER_CSS <-
   ".shiny-file-browser { overflow: auto; border: 1px solid #ddd; padding: 0.5rem; user-select: none; font-size: 1.1em; }
-  .shiny-file-browser .current-wd {  padding: 0.5rem 0; }
-  .shiny-file-browser .current-wd .current-wd-breadcrumbs { display: flex; align-items: center; }
+  .shiny-file-browser .current-wd .current-wd-breadcrumbs { padding: 0.3rem 0; display: flex; align-items: center; }
   .shiny-file-browser .current-wd .file-breadcrumb { white-space: nowrap; padding: 0 0.2em; border-radius: 5px; transition: background 0.3s; }
   .shiny-file-browser .current-wd .file-breadcrumb-clickable { cursor: pointer; }
   .shiny-file-browser .current-wd .file-breadcrumb-clickable:hover { background: #f6f6f6; }
@@ -48,6 +47,7 @@ general_browser_server <- function(
     root = NULL,
     include_hidden = NULL,
     include_empty = NULL,
+    show_path = NULL,
     show_extension = NULL,
     show_size = NULL,
     parent_text = NULL
@@ -63,6 +63,7 @@ general_browser_server <- function(
       path_r <- make_reactive(path)
       extensions_r <- make_reactive(extensions)
       root_r <- make_reactive(root)
+      show_path_r <- make_reactive(show_path)
 
       observeEvent(path_r(), {
         if (real_fs) {
@@ -101,6 +102,8 @@ general_browser_server <- function(
       }
 
       output$current_wd <- renderUI({
+        if (!show_path_r()) return()
+
         crumbs <- make_breadcrumbs(wd())
         if (!real_fs) {
           home_crumb <- stats::setNames("Home", "")

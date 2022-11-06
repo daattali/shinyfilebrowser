@@ -15,6 +15,7 @@ file_browser_server(
   root = path,
   include_hidden = FALSE,
   include_empty = TRUE,
+  show_path = TRUE,
   show_extension = TRUE,
   show_size = TRUE,
   parent_text = ".."
@@ -38,6 +39,8 @@ Use \code{NULL} to allow the user to navigate the entire filesystem.}
 \item{include_hidden}{(boolean) If \code{TRUE}, show hidden files and folders.}
 
 \item{include_empty}{(boolean) If \code{TRUE}, show empty files (files with size 0 bytes).}
+
+\item{show_path}{(boolean) If \code{TRUE}, show the current path above the browser.}
 
 \item{show_extension}{(boolean) If \code{TRUE}, show file extensions in the file names.}
 

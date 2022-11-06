@@ -22,6 +22,7 @@ file_browser_ui <- function(id, height = NULL) {
 #' Use `NULL` to allow the user to navigate the entire filesystem.
 #' @param include_hidden (boolean) If `TRUE`, show hidden files and folders.
 #' @param include_empty (boolean) If `TRUE`, show empty files (files with size 0 bytes).
+#' @param show_path (boolean) If `TRUE`, show the current path above the browser.
 #' @param show_extension (boolean) If `TRUE`, show file extensions in the file names.
 #' @param show_size (boolean) If `TRUE`, show file sizes along the file names.
 #' @param parent_text The text to use to indicate the parent directory.
@@ -36,6 +37,7 @@ file_browser_server <- function(
     root = path,
     include_hidden = FALSE,
     include_empty = TRUE,
+    show_path = TRUE,
     show_extension = TRUE,
     show_size = TRUE,
     parent_text = ".."
@@ -46,7 +48,7 @@ file_browser_server <- function(
     path = path,
     extensions = extensions, root = root,
     include_hidden = include_hidden, include_empty = include_empty,
-    show_extension = show_extension, show_size = show_size,
+    show_path = show_path, show_extension = show_extension, show_size = show_size,
     parent_text = parent_text
   )
 }
