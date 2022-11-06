@@ -9,13 +9,16 @@ Authors@R: c(
     ))
 Description: Display a simple file browser of the server-side file system in
     'Shiny' apps. The file browser also supported "fake" file systems by
-    allowing you to browse any list of paths.
+    allowing you to browse any list of paths or to select an item from a list.
 URL: https://github.com/daattali/shinyfilebrowser
 BugReports: https://github.com/daattali/shinyfilebrowser/issues
 Depends:
     R (>= 3.3.0)
 Imports:
-    shiny (>= 1.0.0)
+    htmltools,
+    shiny (>= 1.0.0),
+    stats,
+    tools
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
