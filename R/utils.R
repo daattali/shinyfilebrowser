@@ -63,19 +63,27 @@ get_files_dirs_fake <- function(path, paths) {
   list(files = files, dirs = dirs)
 }
 
-create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path), meta = NULL, ns = shiny::NS(NULL)) {
+create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path),
+                            show_icons = TRUE, meta = NULL, ns = shiny::NS(NULL)) {
   type <- match.arg(type)
 
   if (path == ".") {
     path <- ""
   }
 
-  if (type == FILEBROWSER_TYPE_PARENT) {
-    icon_type <- "arrow-left"
-  } else if (type == FILEBROWSER_TYPE_DIR) {
-    icon_type <- "folder"
-  } else if (type == FILEBROWSER_TYPE_FILE) {
-    icon_type <- "file-alt"
+  icon_div <- NULL
+  if (show_icons) {
+    if (type == FILEBROWSER_TYPE_PARENT) {
+      icon_type <- "arrow-left"
+    } else if (type == FILEBROWSER_TYPE_DIR) {
+      icon_type <- "folder"
+    } else if (type == FILEBROWSER_TYPE_FILE) {
+      icon_type <- "file-alt"
+    }
+    icon_div <- shiny::div(
+      shiny::icon(icon_type, class = "fa-fw", verify_fa = FALSE),
+      class = "file-icon"
+    )
   }
 
   if (!is.null(meta)) {
@@ -85,13 +93,13 @@ create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path
     )
   }
 
-  div(
+  shiny::div(
     class = paste0("file-row file-type-", type),
     onclick = create_file_onclick(path, ns = ns),
-    div(icon(icon_type, class = "fa-fw", verify_fa = FALSE), class = "file-icon"),
-    div(
+    icon_div,
+    shiny::div(
       class = "file-contents",
-      span(text, class = "file-name"),
+      shiny::span(text, class = "file-name"),
       meta
     )
   )

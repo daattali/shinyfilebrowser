@@ -20,6 +20,7 @@ path_browser_ui <- function(id, height = NULL) {
 #' path separator. Any leading slashes are automatically removed.
 #' @param show_path (boolean) If `TRUE`, show the current path above the browser.
 #' @param show_extension (boolean) If `TRUE`, show file extensions in the file names.
+#' @param show_icons (boolean) If `TRUE`, show icons on the left column beside the file names.
 #' @param parent_text The text to use to indicate the parent directory.
 #' @return List with reactive elements:
 #'   - selected: The full normalized path of the selected file (`NULL` before a file is selected)
@@ -30,6 +31,7 @@ path_browser_server <- function(
     paths,
     show_path = TRUE,
     show_extension = TRUE,
+    show_icons = TRUE,
     parent_text = ".."
 ) {
   paths <- sub("^/+", "", paths)
@@ -38,7 +40,7 @@ path_browser_server <- function(
     real_fs = FALSE,
     id = id,
     path = paths,
-    show_path = show_path, show_extension = show_extension,
+    show_path = show_path, show_extension = show_extension, show_icons = show_icons,
     parent_text = parent_text
   )
 }

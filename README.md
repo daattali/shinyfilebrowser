@@ -47,7 +47,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   filebrowser <- file_browser_server(
     "files", path = "~", root = NULL, 
-    show_path = reactive(input$show_path)
+    show_icons = reactive(input$show_path)
   )
   output$cur_wd <- renderText({
     filebrowser$path()

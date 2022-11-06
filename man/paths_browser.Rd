@@ -13,6 +13,7 @@ path_browser_server(
   paths,
   show_path = TRUE,
   show_extension = TRUE,
+  show_icons = TRUE,
   parent_text = ".."
 )
 }
@@ -28,6 +29,8 @@ path separator. Any leading slashes are automatically removed.}
 \item{show_path}{(boolean) If \code{TRUE}, show the current path above the browser.}
 
 \item{show_extension}{(boolean) If \code{TRUE}, show file extensions in the file names.}
+
+\item{show_icons}{(boolean) If \code{TRUE}, show icons on the left column beside the file names.}
 
 \item{parent_text}{The text to use to indicate the parent directory.}
 }

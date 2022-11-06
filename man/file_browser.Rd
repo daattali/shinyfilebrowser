@@ -13,11 +13,12 @@ file_browser_server(
   path = getwd(),
   extensions = NULL,
   root = path,
-  include_hidden = FALSE,
-  include_empty = TRUE,
   show_path = TRUE,
   show_extension = TRUE,
   show_size = TRUE,
+  show_icons = TRUE,
+  include_hidden = FALSE,
+  include_empty = TRUE,
   parent_text = ".."
 )
 }
@@ -36,15 +37,17 @@ If \code{NULL}, all file types are shown.}
 navigate to any parent of this root. By default, the \code{path} parameter acts as the root.
 Use \code{NULL} to allow the user to navigate the entire filesystem.}
 
-\item{include_hidden}{(boolean) If \code{TRUE}, show hidden files and folders.}
-
-\item{include_empty}{(boolean) If \code{TRUE}, show empty files (files with size 0 bytes).}
-
 \item{show_path}{(boolean) If \code{TRUE}, show the current path above the browser.}
 
 \item{show_extension}{(boolean) If \code{TRUE}, show file extensions in the file names.}
 
 \item{show_size}{(boolean) If \code{TRUE}, show file sizes along the file names.}
+
+\item{show_icons}{(boolean) If \code{TRUE}, show icons on the left column beside the file names.}
+
+\item{include_hidden}{(boolean) If \code{TRUE}, show hidden files and folders.}
+
+\item{include_empty}{(boolean) If \code{TRUE}, show empty files (files with size 0 bytes).}
 
 \item{parent_text}{The text to use to indicate the parent directory.}
 }

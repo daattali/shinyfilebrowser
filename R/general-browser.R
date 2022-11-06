@@ -16,7 +16,7 @@ FILEBROWSER_CSS <-
   .shiny-file-browser .file-row:active { background: #ccc; }
   .shiny-file-browser .file-icon { margin-right: 2rem; }
   .shiny-file-browser .file-type-dir .file-contents,
-  .shiny-file-browser .file-type-parent .file-contents { font-weight: bold; }
+  .shiny-file-browser .file-type-parent .file-contents { font-weight: bold; padding-left: 0.2em; }
   .shiny-file-browser .file-meta { font-style: italic; }"
 
 general_browser_ui <- function(id, height = NULL) {
@@ -50,6 +50,7 @@ general_browser_server <- function(
     show_path = NULL,
     show_extension = NULL,
     show_size = NULL,
+    show_icons = NULL,
     parent_text = NULL
 ) {
   moduleServer(
@@ -64,6 +65,7 @@ general_browser_server <- function(
       extensions_r <- make_reactive(extensions)
       root_r <- make_reactive(root)
       show_path_r <- make_reactive(show_path)
+      show_icons_r <- make_reactive(show_icons)
 
       observeEvent(path_r(), {
         if (real_fs) {
@@ -144,7 +146,7 @@ general_browser_server <- function(
         files_dirs <- get_files_dirs()
 
         dirs_rows <- lapply(files_dirs$dirs, function(dir) {
-          create_file_row(FILEBROWSER_TYPE_DIR, dir, ns = ns)
+          create_file_row(FILEBROWSER_TYPE_DIR, dir, show_icons = show_icons_r(), ns = ns)
         })
         files_rows <- lapply(files_dirs$files, function(file) {
           if (real_fs) {
@@ -168,7 +170,7 @@ general_browser_server <- function(
             file_text <- tools::file_path_sans_ext(basename(file))
           }
 
-          create_file_row(FILEBROWSER_TYPE_FILE, file, file_text, size, ns = ns)
+          create_file_row(FILEBROWSER_TYPE_FILE, file, file_text, size, show_icons = show_icons_r(),  ns = ns)
         })
 
         dirs_rows <- drop_null(dirs_rows)
@@ -177,7 +179,7 @@ general_browser_server <- function(
         if (at_root()) {
           parent_row <- NULL
         } else {
-          parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), parent_text, ns = ns)
+          parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), parent_text, show_icons = show_icons_r(), ns = ns)
         }
 
         tagList(
