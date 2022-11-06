@@ -3,7 +3,7 @@ FILEBROWSER_TYPE_DIR <- "dir"
 FILEBROWSER_TYPE_FILE <- "file"
 FILEBROWSER_TYPES <- c(FILEBROWSER_TYPE_PARENT, FILEBROWSER_TYPE_DIR, FILEBROWSER_TYPE_FILE)
 FILEBROWSER_CSS <-
-  ".shiny-file-browser { overflow: auto; border: 1px solid #ddd; padding: 0.5rem; user-select: none; font-size: 1.1em; }
+  ".shiny-file-browser { overflow: auto; border: 1px solid #ddd; padding: 0.5rem; user-select: none; font-size: 1.1em; margin-bottom: 1rem; }
   .shiny-file-browser.shiny-browser-bigger .shiny-file-browser { font-size: 1.2em; }
   .shiny-file-browser .current-wd .current-wd-breadcrumbs { padding: 0.3rem 0; display: flex; align-items: center; background: #fafafa; color: #555; }
   .shiny-file-browser .current-wd .file-breadcrumb { white-space: nowrap; padding: 0 0.2em; border-radius: 5px; transition: background 0.3s; }
