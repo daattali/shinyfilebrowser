@@ -21,4 +21,6 @@ FILEBROWSER_CSS <-
   .shiny-file-browser .file-icon { margin-right: 2rem; }
   .shiny-file-browser .file-type-dir .file-contents,
   .shiny-file-browser .file-type-parent .file-contents { font-weight: bold; padding-left: 0.2em; }
-  .shiny-file-browser .file-meta { font-style: italic; }"
+  .shiny-file-browser .file-meta { font-style: italic; }
+  .shiny-file-browser.shiny-browser-bigger .file-empty { padding: 10px; }
+  "

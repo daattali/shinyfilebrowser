@@ -202,7 +202,7 @@ general_browser_server <- function(
           parent_row,
           dirs_rows,
           files_rows,
-          if (length(dirs_rows) == 0 && length(files_rows) == 0) shiny::div(text_empty_r())
+          if (length(dirs_rows) == 0 && length(files_rows) == 0) shiny::div(class = "file-empty", text_empty_r())
         )
       })
 

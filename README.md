@@ -73,7 +73,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   listsel <- list_selector_server("names", choices = names)
   output$selected <- renderText({
-    listsel$selected()
+    listsel()
   })
 }
 
@@ -193,7 +193,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   nums <- list_selector_server("nums", choices = nums)
   output$selected <- renderText({
-    nums$selected()
+    nums()
   })
 }
 
