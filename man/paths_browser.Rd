@@ -6,7 +6,7 @@
 \alias{path_browser_server}
 \title{Path browser}
 \usage{
-path_browser_ui(id, height = NULL, width = "100\%")
+path_browser_ui(id, height = NULL, width = "100\%", bigger = FALSE)
 
 path_browser_server(
   id,
@@ -25,6 +25,8 @@ path_browser_server(
 
 \item{width}{The width of the path browser. Must be a valid CSS unit (like \code{"100\%"},
 \code{"400px"}, \code{"auto"}) or a number which will be the number of pixels.}
+
+\item{bigger}{(boolean) If \code{TRUE}, make the rows larger and more spacious.}
 
 \item{paths}{List of paths that the user can browse and select from. Use \code{/} as a
 path separator. Any leading slashes are automatically removed.}

@@ -6,7 +6,7 @@
 \alias{file_browser_server}
 \title{File browser}
 \usage{
-file_browser_ui(id, height = NULL, width = "100\%")
+file_browser_ui(id, height = NULL, width = "100\%", bigger = FALSE)
 
 file_browser_server(
   id,
@@ -30,6 +30,8 @@ file_browser_server(
 
 \item{width}{The width of the file browser. Must be a valid CSS unit (like \code{"100\%"},
 \code{"400px"}, \code{"auto"}) or a number which will be the number of pixels.}
+
+\item{bigger}{(boolean) If \code{TRUE}, make the rows larger and more spacious.}
 
 \item{path}{(reactive or static) The initial path the file browser should show.}
 

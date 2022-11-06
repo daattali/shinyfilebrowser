@@ -1,13 +1,18 @@
-general_browser_ui <- function(id, height = NULL, width = "100%") {
+general_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
   ns <- shiny::NS(id)
 
   width_css <- paste0("width: ", htmltools::validateCssUnit(width), ";")
   height_css <- if (!is.null(height)) paste0("height: ", htmltools::validateCssUnit(height)) else ""
   style <- paste(width_css, height_css)
 
+  class <- "shiny-file-browser"
+  if (bigger) {
+    class <- paste(class, "shiny-browser-bigger")
+  }
+
   shiny::div(
     shiny::singleton(shiny::tags$head(shiny::tags$style(FILEBROWSER_CSS))),
-    class = "shiny-file-browser",
+    class = class,
     style = style,
     shiny::div(
       class = "current-wd",
@@ -94,13 +99,17 @@ general_browser_server <- function(
         }
 
         crumbs_html <- lapply(seq_along(crumbs), function(idx) {
+          class <- "file-breadcrumb"
+          if (is_legal_path(names(crumbs[idx]))) {
+            class <- paste(class, "file-breadcrumb-clickable")
+          }
+
           tagList(
             if (idx > 1) span(HTML("&rsaquo;"), class = "file-breadcrumb-separator"),
             span(
               unname(crumbs[idx]),
               onclick = create_file_onclick(names(crumbs[idx]), ns = ns),
-              class = "file-breadcrumb",
-              class = if (is_legal_path(names(crumbs[idx]))) "file-breadcrumb-clickable"
+              class = class
             )
           )
         })

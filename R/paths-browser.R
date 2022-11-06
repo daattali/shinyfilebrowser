@@ -12,9 +12,10 @@ NULL
 #' `"400px"`, `"auto"`) or a number which will be the number of pixels.
 #' @param width The width of the path browser. Must be a valid CSS unit (like `"100%"`,
 #' `"400px"`, `"auto"`) or a number which will be the number of pixels.
+#' @param bigger (boolean) If `TRUE`, make the rows larger and more spacious.
 #' @export
-path_browser_ui <- function(id, height = NULL, width = "100%") {
-  general_browser_ui(id = id, height = height, width = width)
+path_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
+  general_browser_ui(id = id, height = height, width = width, bigger = bigger)
 }
 
 #' @rdname paths_browser

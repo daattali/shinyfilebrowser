@@ -69,7 +69,7 @@ ui <- fluidPage(
   textOutput("cur_wd", inline = TRUE), br(),
   "Selected file:",
   textOutput("selected", inline = TRUE), br(),
-  path_browser_ui("paths")
+  path_browser_ui("paths", bigger = TRUE)
 )
 
 server <- function(input, output, session) {
