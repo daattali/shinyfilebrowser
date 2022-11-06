@@ -6,7 +6,7 @@
 \alias{file_browser_server}
 \title{File browser}
 \usage{
-file_browser_ui(id, height = NULL)
+file_browser_ui(id, height = NULL, width = "100\%")
 
 file_browser_server(
   id,
@@ -26,6 +26,9 @@ file_browser_server(
 \item{id}{Unique ID for the module}
 
 \item{height}{The height of the file browser. Must be a valid CSS unit (like \code{"100\%"},
+\code{"400px"}, \code{"auto"}) or a number which will be the number of pixels.}
+
+\item{width}{The width of the file browser. Must be a valid CSS unit (like \code{"100\%"},
 \code{"400px"}, \code{"auto"}) or a number which will be the number of pixels.}
 
 \item{path}{(reactive or static) The initial path the file browser should show.}

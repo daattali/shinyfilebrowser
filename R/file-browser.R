@@ -8,9 +8,11 @@ NULL
 #' @rdname file_browser
 #' @param height The height of the file browser. Must be a valid CSS unit (like `"100%"`,
 #' `"400px"`, `"auto"`) or a number which will be the number of pixels.
+#' @param width The width of the file browser. Must be a valid CSS unit (like `"100%"`,
+#' `"400px"`, `"auto"`) or a number which will be the number of pixels.
 #' @export
-file_browser_ui <- function(id, height = NULL) {
-  general_browser_ui(id = id, height = height)
+file_browser_ui <- function(id, height = NULL, width = "100%") {
+  general_browser_ui(id = id, height = height, width = width)
 }
 
 #' @rdname file_browser

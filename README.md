@@ -40,15 +40,11 @@ ui <- fluidPage(
   textOutput("cur_wd", inline = TRUE), br(),
   "Selected file:",
   textOutput("selected", inline = TRUE), br(),
-  checkboxInput("show_path", "Show Path", TRUE),
   file_browser_ui("files")
 )
 
 server <- function(input, output, session) {
-  filebrowser <- file_browser_server(
-    "files", path = "~", root = NULL, 
-    show_icons = reactive(input$show_path)
-  )
+  filebrowser <- file_browser_server("files", path = "~", root = NULL)
   output$cur_wd <- renderText({
     filebrowser$path()
   })
@@ -77,7 +73,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  pathbrowser <- path_browser_server("paths", paths = paths, show_path = FALSE)
+  pathbrowser <- path_browser_server("paths", paths = paths, show_path = FALSE, show_icons = FALSE)
   output$cur_wd <- renderText({
     pathbrowser$path()
   })
