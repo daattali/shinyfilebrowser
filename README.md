@@ -2,7 +2,18 @@
 
 **Fully functional, but the documentation is a work in progress**
 
-There are three modules in this package: file_browser is for browsing a file system, path_browser is for browsing an arbitrary set of paths, and list_selector is to select an item from a list. All use the same interface but have slightly different use cases.
+There are three modules in this package. All use the same interface but have slightly different use cases:
+1. file_browser is for browsing a file system
+2. path_browser is for browsing an arbitrary set of path
+3. list_selector is to select an item from a list. 
+
+Screenshot of file browser
+
+![Basic file browser](inst/img/basic-file-browser.png)
+
+Screenshot of list selector
+
+![Basic list selector](inst/img/basic-list-selector.png)
 
 ## Example 1: file browser from the current working directory, the user cannot navigate above the working directory.
 
