@@ -1,7 +1,8 @@
 #' Path browser
 #'
 #' Display a simple path browser that allows the user to browse paths and
-#' select a path. This can also be used as a list selector.
+#' select a path. This is essentially equivalent to allowing the user to
+#' navigate a tree structure. The path browser can also be used as a list selector.
 #' @param id Unique ID for the module
 #' @name paths_browser
 NULL

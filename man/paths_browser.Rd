@@ -32,5 +32,6 @@ List with reactive elements:
 }
 \description{
 Display a simple path browser that allows the user to browse paths and
-select a path. This can also be used as a list selector.
+select a path. This is essentially equivalent to allowing the user to
+navigate a tree structure. The path browser can also be used as a list selector.
 }
