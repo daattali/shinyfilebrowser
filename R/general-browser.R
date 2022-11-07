@@ -186,7 +186,9 @@ general_browser_server <- function(
             file_text <- tools::file_path_sans_ext(basename(file))
           }
 
-          create_file_row(FILEBROWSER_TYPE_FILE, file, file_text, size, show_icons = show_icons_r(),  ns = ns)
+          active <- !is.null(selected()) && file == selected()
+
+          create_file_row(FILEBROWSER_TYPE_FILE, file, file_text, size, show_icons = show_icons_r(), active = active, ns = ns)
         })
 
         dirs_rows <- drop_null(dirs_rows)
@@ -218,7 +220,11 @@ general_browser_server <- function(
         if (is_dir(input$file_clicked)) {
           wd( input$file_clicked )
         } else {
-          selected( input$file_clicked )
+          if (!is.null(selected()) && selected() == input$file_clicked) {
+            selected(NULL)
+          } else {
+            selected( input$file_clicked )
+          }
         }
       })
 

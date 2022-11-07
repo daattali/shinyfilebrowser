@@ -1,5 +1,5 @@
 create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path),
-                            show_icons = TRUE, meta = NULL, ns = shiny::NS(NULL)) {
+                            show_icons = TRUE, meta = NULL, active = FALSE, ns = shiny::NS(NULL)) {
   type <- match.arg(type)
 
   if (path == ".") {
@@ -29,7 +29,7 @@ create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path
   }
 
   shiny::div(
-    class = paste0("file-row file-type-", type),
+    class = paste0("file-row file-type-", type, if (active) " file-selected"),
     onclick = create_file_onclick(path, ns = ns),
     icon_div,
     shiny::div(

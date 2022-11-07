@@ -17,6 +17,7 @@ FILEBROWSER_CSS <-
   .shiny-file-browser .file-row { display: flex; cursor: pointer; transition: background 0.3s; }
   .shiny-file-browser .file-row:hover { background: #f6f6f6; }
   .shiny-file-browser .file-row:active { background: #ccc; }
+  .shiny-file-browser .file-row.file-selected { background: #e0e0e0; }
   .shiny-file-browser.shiny-browser-bigger .file-row { padding: 10px; }
   .shiny-file-browser .file-icon { margin-right: 2rem; }
   .shiny-file-browser .file-type-dir .file-contents,
