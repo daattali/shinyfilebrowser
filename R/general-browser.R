@@ -11,7 +11,13 @@ general_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE
   }
 
   shiny::div(
-    shiny::singleton(shiny::tags$head(shiny::tags$style(FILEBROWSER_CSS))),
+    htmltools::htmlDependency(
+      name = "shinyfilebrowser-binding",
+      version = as.character(utils::packageVersion("shinyfilebrowser")),
+      package = "shinyfilebrowser",
+      src = "assets/shinyfilebrowser",
+      stylesheet = "shinyfilebrowser.css"
+    ),
     class = class,
     style = style,
     shiny::div(

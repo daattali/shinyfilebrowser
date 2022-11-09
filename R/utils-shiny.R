@@ -1,3 +1,8 @@
+FILEBROWSER_TYPE_PARENT <- "parent"
+FILEBROWSER_TYPE_DIR <- "dir"
+FILEBROWSER_TYPE_FILE <- "file"
+FILEBROWSER_TYPES <- c(FILEBROWSER_TYPE_PARENT, FILEBROWSER_TYPE_DIR, FILEBROWSER_TYPE_FILE)
+
 create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path),
                             show_icons = TRUE, meta = NULL, active = FALSE, ns = shiny::NS(NULL)) {
   type <- match.arg(type)
