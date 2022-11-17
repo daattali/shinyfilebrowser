@@ -8,7 +8,7 @@
 \usage{
 list_selector_ui(id, height = NULL, width = "100\%", bigger = TRUE)
 
-list_selector_server(id, choices, text_empty = "No items")
+list_selector_server(id, choices, html = FALSE, text_empty = "No items")
 }
 \arguments{
 \item{id}{Unique ID for the module}
@@ -22,6 +22,8 @@ list_selector_server(id, choices, text_empty = "No items")
 \item{bigger}{(boolean) If \code{TRUE}, make the rows larger and more spacious.}
 
 \item{choices}{List of values to select from.}
+
+\item{html}{(reactive) If \code{TRUE}, allow HTML to be used in the item names.}
 
 \item{text_empty}{The text show when a folder has nothing to show.}
 }

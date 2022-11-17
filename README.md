@@ -213,3 +213,31 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
+## Example 7: list selector with HTML 
+
+```r
+library(shiny)
+library(shinyfilebrowser)
+
+names <- c(
+  "<div style='color:red'>bobby</div>" = "Bob",
+  "<em>Mary</em>" = "Mary",
+  "<img src='https://deanattali.com/assets/img/deanimg.jpeg' width=50/> Dean" = "Dean",
+  "John", "Julie")
+
+ui <- fluidPage(
+  "Selected:",
+  textOutput("selected", inline = TRUE), br(),
+  list_selector_ui("names")
+)
+
+server <- function(input, output, session) {
+  listsel <- list_selector_server("names", choices = names, html = TRUE)
+  output$selected <- renderText({
+    listsel()
+  })
+}
+
+shinyApp(ui, server)
+```
+

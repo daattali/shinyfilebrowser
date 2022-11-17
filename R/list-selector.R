@@ -23,19 +23,23 @@ list_selector_ui <- function(id, height = NULL, width = "100%", bigger = TRUE) {
 #' @rdname list_selector
 #' @inheritParams file_browser_server
 #' @param choices List of values to select from.
+#' @param html (reactive) If `TRUE`, allow HTML to be used in the item names.
 #' @return (reactive) The selected item (`NULL` before an item is selected)
 #' @export
 list_selector_server <- function(
     id,
     choices,
+    html = FALSE,
     text_empty = "No items"
 ) {
   general_browser_server(
-    real_fs = FALSE, return_path = FALSE,
+    real_fs = FALSE,
+    return_path = FALSE,
     id = id,
     path = choices,
     show_path = FALSE,
     show_icons = FALSE,
-    text_empty = text_empty
+    text_empty = text_empty,
+    html = html
   )
 }

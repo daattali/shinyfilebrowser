@@ -45,7 +45,8 @@ general_browser_server <- function(
     show_size = TRUE,
     show_icons = TRUE,
     text_parent = "..",
-    text_empty = "No files here"
+    text_empty = "No files here",
+    html = FALSE
 ) {
   shiny::moduleServer(
     id,
@@ -67,6 +68,7 @@ general_browser_server <- function(
       show_icons_r <- make_reactive(show_icons)
       text_parent_r <- make_reactive(text_parent)
       text_empty_r <- make_reactive(text_empty)
+      html_r <- make_reactive(html)
 
       values_asis <- shiny::reactiveVal(NULL)
 
@@ -186,6 +188,9 @@ general_browser_server <- function(
 
           if (!is.null(values_asis())) {
             file_text <- names(which(values_asis() == file))[1]
+            if (html_r()) {
+              file_text <- shiny::HTML(file_text)
+            }
           } else if (show_extension_r()) {
             file_text <- basename(file)
           } else {
