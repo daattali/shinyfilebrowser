@@ -14,6 +14,7 @@ path_browser_server(
   show_path = TRUE,
   show_extension = TRUE,
   show_icons = TRUE,
+  clear_selection_on_navigate = FALSE,
   text_parent = "..",
   text_empty = "No items here"
 )
@@ -37,6 +38,9 @@ path separator, but do not use \code{/} as a leading slash.}
 \item{show_extension}{If \code{TRUE}, show file extensions in the file names.}
 
 \item{show_icons}{If \code{TRUE}, show icons on the left column beside the file names.}
+
+\item{clear_selection_on_navigate}{If \code{TRUE}, the selected path will be cleared
+when navigating to a new directory.}
 
 \item{text_parent}{The text to use to indicate the parent directory.}
 

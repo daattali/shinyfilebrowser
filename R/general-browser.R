@@ -45,7 +45,8 @@ general_browser_server <- function(
     show_icons = TRUE,
     text_parent = "..",
     text_empty = "No files here",
-    html = FALSE
+    html = FALSE,
+    clear_selection_on_navigate = FALSE
 ) {
 
   type <- match.arg(type)
@@ -84,6 +85,7 @@ general_browser_server <- function(
       text_parent_r <- make_reactive(text_parent)
       text_empty_r <- make_reactive(text_empty)
       html_r <- make_reactive(html)
+      clear_selection_on_navigate_r <- make_reactive(clear_selection_on_navigate)
 
       shiny::observeEvent(path_r(), ignoreNULL = FALSE, {
         if (type == "file") {
@@ -252,6 +254,9 @@ general_browser_server <- function(
 
         if (is_dir(input$file_clicked)) {
           wd( input$file_clicked )
+          if (clear_selection_on_navigate_r()) {
+            selected(NULL)
+          }
         } else {
           if (!is.null(selected()) && selected() == input$file_clicked) {
             selected(NULL)

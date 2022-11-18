@@ -153,9 +153,9 @@ ui <- fluidPage(
   checkboxGroupInput(
     "options", NULL, inline = TRUE,
     c("Show path" = "show_path", "Show extensions" = "show_extension", "Show file size" = "show_size",
-      "Show icons" = "show_icons", "Include hidden files" = "include_hidden", "Include empty files" = "include_empty"
+      "Show icons" = "show_icons", "Include hidden files" = "include_hidden", "Include empty files" = "include_empty", "Clear selection when navigating" = "clear_selection_on_navigate"
     ),
-    c("show_path", "show_extension", "show_size", "show_icons", "include_hidden", "include_empty")
+    c("show_path", "show_extension", "show_size", "show_icons", "include_hidden", "include_empty", "clear_selection_on_navigate")
   ),
   selectInput("extensions", "Extensions", c("Any file" = "", ".csv", ".R", ".xlsx", ".md"), multiple = TRUE),
   textInput("text_parent", "Parent directory text", ".."),
@@ -176,7 +176,8 @@ server <- function(input, output, session) {
     include_hidden = reactive("include_hidden" %in% input$options),
     include_empty = reactive("include_empty" %in% input$options),
     text_parent = reactive(input$text_parent),
-    text_empty = reactive(input$text_empty)
+    text_empty = reactive(input$text_empty),
+    clear_selection_on_navigate = reactive("clear_selection_on_navigate" %in% input$options)
   )
   output$cur_wd <- renderText({
     filebrowser$path()

@@ -19,6 +19,7 @@ file_browser_server(
   show_icons = TRUE,
   include_hidden = FALSE,
   include_empty = TRUE,
+  clear_selection_on_navigate = FALSE,
   text_parent = "..",
   text_empty = "No files here"
 )
@@ -54,6 +55,9 @@ Use \code{NULL} to allow the user to navigate the entire filesystem.}
 \item{include_hidden}{If \code{TRUE}, show hidden files and folders.}
 
 \item{include_empty}{If \code{TRUE}, show empty files (files with size 0 bytes).}
+
+\item{clear_selection_on_navigate}{If \code{TRUE}, the selected path will be cleared
+when navigating to a new directory.}
 
 \item{text_parent}{The text to use to indicate the parent directory.}
 

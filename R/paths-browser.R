@@ -34,6 +34,7 @@ path_browser_server <- function(
     show_path = TRUE,
     show_extension = TRUE,
     show_icons = TRUE,
+    clear_selection_on_navigate = FALSE,
     text_parent = "..",
     text_empty = "No items here"
 ) {
@@ -42,6 +43,7 @@ path_browser_server <- function(
     id = id,
     path = paths,
     show_path = show_path, show_extension = show_extension, show_icons = show_icons,
-    text_parent = text_parent, text_empty = text_empty
+    text_parent = text_parent, text_empty = text_empty,
+    clear_selection_on_navigate = clear_selection_on_navigate
   )
 }

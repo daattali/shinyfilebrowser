@@ -33,6 +33,8 @@ file_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
 #' @param include_empty If `TRUE`, show empty files (files with size 0 bytes).
 #' @param text_parent The text to use to indicate the parent directory.
 #' @param text_empty The text show when a folder has nothing to show.
+#' @param clear_selection_on_navigate If `TRUE`, the selected path will be cleared
+#' when navigating to a new directory.
 #' @return List with reactive elements:
 #'   - selected: The full normalized path of the selected file (`NULL` before a file is selected)
 #'   - path: The full normalized path that is currently displayed in the file browser
@@ -48,6 +50,7 @@ file_browser_server <- function(
     show_icons = TRUE,
     include_hidden = FALSE,
     include_empty = TRUE,
+    clear_selection_on_navigate = FALSE,
     text_parent = "..",
     text_empty = "No files here"
 ) {
@@ -58,6 +61,7 @@ file_browser_server <- function(
     extensions = extensions, root = root,
     include_hidden = include_hidden, include_empty = include_empty,
     show_path = show_path, show_extension = show_extension, show_size = show_size, show_icons = show_icons,
-    text_parent = text_parent, text_empty = text_empty
+    text_parent = text_parent, text_empty = text_empty,
+    clear_selection_on_navigate = clear_selection_on_navigate
   )
 }
