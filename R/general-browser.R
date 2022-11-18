@@ -32,8 +32,7 @@ general_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE
 }
 
 general_browser_server <- function(
-    real_fs,
-    return_path = TRUE,
+    type = c("file", "path", "list"),
     id,
     path,
     extensions = NULL,
@@ -48,6 +47,22 @@ general_browser_server <- function(
     text_empty = "No files here",
     html = FALSE
 ) {
+
+  type <- match.arg(type)
+
+  if (type == "file") {
+    return_path <- TRUE
+    real_fs <- TRUE
+  } else if (type == "path") {
+    return_path <- TRUE
+    real_fs <- FALSE
+  } else if (type == "list") {
+    return_path <- FALSE
+    real_fs <- FALSE
+  } else {
+    stop("Unexpected general_browser_server type: ", type)
+  }
+
   shiny::moduleServer(
     id,
     function(input, output, session) {
@@ -70,23 +85,30 @@ general_browser_server <- function(
       text_empty_r <- make_reactive(text_empty)
       html_r <- make_reactive(html)
 
-      values_asis <- shiny::reactiveVal(NULL)
-
       shiny::observeEvent(path_r(), ignoreNULL = FALSE, {
-        if (real_fs) {
+        if (type == "file") {
           initial_path <- make_path(path_r())
-        } else {
-          if (is.null(names(path_r()))) {
-            if (any(grepl("^/+", path_r()))) {
-              stop("Paths should not begin with a slash")
-            }
-          } else {
-            values_asis(fill_names(path_r()))
+        } else if (type == "path") {
+          if (!is.null(names(path_r()))) {
+            stop("Paths cannot be namded lists, consider using `list_selector` instead of `path_browser`.")
           }
+          if (any(grepl("^/+", path_r()))) {
+            stop("Paths should not begin with a slash.")
+          }
+          initial_path <- ""
+        } else if (type == "list") {
           initial_path <- ""
         }
         wd(initial_path)
         selected(NULL)
+      })
+
+      list_values <- reactive({
+        if (type == "list") {
+          fill_names(path_r())
+        } else {
+          NULL
+        }
       })
 
       is_legal_path <- function(path) {
@@ -156,10 +178,10 @@ general_browser_server <- function(
         } else {
           if (is.null(path_r())) {
             list(files = character(0), dirs = character(0))
-          } else if (is.null(values_asis())) {
+          } else if (is.null(list_values())) {
             get_files_dirs_fake(path = wd(), paths = path_r())
           } else {
-            list(files = values_asis(), dirs = character(0))
+            list(files = list_values(), dirs = character(0))
           }
         }
       })
@@ -186,8 +208,8 @@ general_browser_server <- function(
             size <- NULL
           }
 
-          if (!is.null(values_asis())) {
-            file_text <- names(which(values_asis() == file))[1]
+          if (!is.null(list_values())) {
+            file_text <- names(which(list_values() == file))[1]
             if (html_r()) {
               file_text <- shiny::HTML(file_text)
             }

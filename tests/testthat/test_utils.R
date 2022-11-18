@@ -28,11 +28,11 @@ test_that("fill_names works", {
   )
   expect_identical(
     fill_names(""),
-    ""
+    "" = ""
   )
   expect_identical(
     fill_names(c("a", "b")),
-    c("a", "b")
+    c("a" = "a", "b" = "b")
   )
   expect_identical(
     fill_names(c("a", "b", "c" = "C")),
@@ -48,7 +48,7 @@ test_that("fill_names works", {
   )
   expect_identical(
     fill_names(list("a", "b")),
-    list("a", "b")
+    list("a" = "a", "b" = "b")
   )
   expect_identical(
     fill_names(list("a", "b", "c" = "C")),

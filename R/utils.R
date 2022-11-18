@@ -3,8 +3,13 @@ drop_null <- function(x) {
 }
 
 fill_names <- function(x) {
-  idx <- which(names(x) == "")
-  names(x)[idx] <- x[idx]
+  if (is.null(names(x))) {
+    names(x) <- x
+  } else {
+    idx <- which(names(x) == "")
+    names(x)[idx] <- x[idx]
+  }
+
   x
 }
 

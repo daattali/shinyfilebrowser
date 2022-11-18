@@ -38,7 +38,7 @@ path_browser_server <- function(
     text_empty = "No items here"
 ) {
   general_browser_server(
-    real_fs = FALSE, return_path = TRUE,
+    type = "path",
     id = id,
     path = paths,
     show_path = show_path, show_extension = show_extension, show_icons = show_icons,

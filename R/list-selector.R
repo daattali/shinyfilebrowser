@@ -33,8 +33,7 @@ list_selector_server <- function(
     text_empty = "No items"
 ) {
   general_browser_server(
-    real_fs = FALSE,
-    return_path = FALSE,
+    type = "list",
     id = id,
     path = choices,
     show_path = FALSE,
