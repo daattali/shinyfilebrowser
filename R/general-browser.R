@@ -105,7 +105,7 @@ general_browser_server <- function(
         selected(NULL)
       })
 
-      list_values <- reactive({
+      list_values <- shiny::reactive({
         if (type == "list") {
           fill_names(path_r())
         } else {

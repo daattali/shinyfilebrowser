@@ -28,7 +28,7 @@ test_that("fill_names works", {
   )
   expect_identical(
     fill_names(""),
-    "" = ""
+    stats::setNames("", "")
   )
   expect_identical(
     fill_names(c("a", "b")),
