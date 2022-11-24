@@ -57,7 +57,8 @@
   background: #ccc;
 }
 .shiny-file-browser .file-row.file-selected {
-  background: #e0e0e0;
+  background: #e4effa;
+  color: #1976d2;
 }
 .shiny-file-browser.shiny-browser-bigger .file-row {
   padding: 10px;
