@@ -92,7 +92,7 @@ general_browser_server <- function(
           initial_path <- make_path(path_r())
         } else if (type == "path") {
           if (!is.null(names(path_r()))) {
-            stop("Paths cannot be namded lists, consider using `list_selector` instead of `path_browser`.")
+            stop("Paths cannot be named lists, consider using `list_selector` instead of `path_browser`.")
           }
           if (any(grepl("^/+", path_r()))) {
             stop("Paths should not begin with a slash.")

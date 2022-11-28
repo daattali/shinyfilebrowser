@@ -32,6 +32,7 @@ get_files_dirs_fake <- function(path, paths) {
   if (length(paths) == 0) {
     return()
   }
+  paths <- unlist(paths)
   if (path != "") {
     path <- paste0(path, "/")
   }
