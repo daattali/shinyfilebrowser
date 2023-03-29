@@ -20,6 +20,7 @@ general_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE
     ),
     class = class,
     style = style,
+    shiny::icon(id = ns("loader"), "circle-notch", class = "loader fast-spin fa-2x"),
     shiny::div(
       class = "current-wd",
       shiny::uiOutput(ns("current_wd"))
@@ -189,6 +190,8 @@ general_browser_server <- function(
       })
 
       output$file_list <- shiny::renderUI({
+        shiny::removeUI(selector = paste0("#", ns("loader")))
+
         files_dirs <- get_files_dirs()
 
         dirs_rows <- lapply(files_dirs$dirs, function(dir) {

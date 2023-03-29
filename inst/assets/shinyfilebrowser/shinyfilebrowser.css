@@ -9,6 +9,13 @@
 .shiny-file-browser.shiny-browser-bigger {
   font-size: 1.2em;
 }
+.shiny-file-browser .loader {
+  color: #999;
+}
+.shiny-file-browser .fast-spin {
+  -webkit-animation: fa-spin 1.3s infinite linear;
+  animation: fa-spin 1.3s infinite linear;
+}
 .shiny-file-browser .current-wd .current-wd-breadcrumbs {
   padding: 0.3rem 0;
   display: flex;
