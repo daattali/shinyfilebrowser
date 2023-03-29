@@ -6,7 +6,7 @@
   font-size: 1.1em;
   margin-bottom: 1rem;
 }
-.shiny-file-browser.shiny-browser-bigger .shiny-file-browser {
+.shiny-file-browser.shiny-browser-bigger {
   font-size: 1.2em;
 }
 .shiny-file-browser .current-wd .current-wd-breadcrumbs {
