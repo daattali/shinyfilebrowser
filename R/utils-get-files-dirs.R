@@ -21,7 +21,7 @@ get_files_dirs_real <- function(path, extensions = NULL, hidden = FALSE, root = 
   dirs <- make_path(sort(dirs))
 
   if (length(extensions) > 0) {
-    regex <- gsub("\\.", "\\\\.", paste0(extensions, "$", collapse = "|"))
+    regex <- paste0("\\.", extensions, "$", collapse = "|")
     files <- files[grepl(regex, files)]
   }
 

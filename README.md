@@ -157,7 +157,7 @@ ui <- fluidPage(
     ),
     c("show_path", "show_extension", "show_size", "show_icons", "include_hidden", "include_empty", "clear_selection_on_navigate")
   ),
-  selectInput("extensions", "Extensions", c("Any file" = "", ".csv", ".R", ".xlsx", ".md"), multiple = TRUE),
+  selectInput("extensions", "Extensions", c("Any file" = "", "csv", "R", "xlsx", "md"), multiple = TRUE),
   textInput("text_parent", "Parent directory text", ".."),
   textInput("text_empty", "Empty directory text", "No files here"),
   file_browser_ui("files")
