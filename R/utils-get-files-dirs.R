@@ -22,7 +22,7 @@ get_files_dirs_real <- function(path, extensions = NULL, hidden = FALSE, root = 
 
   if (length(extensions) > 0) {
     regex <- paste0("\\.", extensions, "$", collapse = "|")
-    files <- files[grepl(regex, files)]
+    files <- files[grepl(regex, files, ignore.case = TRUE)]
   }
 
   list(files = files, dirs = dirs)
