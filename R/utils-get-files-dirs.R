@@ -12,8 +12,8 @@ get_files_dirs_real <- function(path, extensions = NULL, hidden = FALSE, root = 
   files <- list.files(path = path, all.files = hidden, full.names = TRUE, recursive = FALSE, no.. = TRUE)
   dirs <- list.dirs(path = path, full.names = TRUE, recursive = FALSE)
 
-  files <- unique(make_path(sort(files)))
-  dirs <- unique(make_path(sort(dirs)))
+  files <- unique(make_path(files))
+  dirs <- unique(make_path(dirs))
 
   # it's not possible to non-recursively get only files but no folders
   files <- setdiff(files, dirs)
@@ -35,6 +35,9 @@ get_files_dirs_real <- function(path, extensions = NULL, hidden = FALSE, root = 
     regex <- paste0("\\.", extensions, "$", collapse = "|")
     files <- files[grepl(regex, files, ignore.case = TRUE)]
   }
+
+  files <- files[order(basename(files))]
+  dirs <- dirs[order(basename(dirs))]
 
   list(files = files, dirs = dirs)
 }
