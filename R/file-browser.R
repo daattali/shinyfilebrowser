@@ -20,8 +20,8 @@ file_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE) {
 
 #' @rdname file_browser
 #' @param path The initial path the file browser should show.
-#' @param extensions List of file extensions that should be shown.
-#' If `NULL`, all file types are shown.
+#' @param extensions List of file extensions that should be shown, case-insensitive
+#' (e.g. `c("csv", "txt")`). If `NULL`, all file types are shown.
 #' @param root The path that should be considered root, which means that the user cannot
 #' navigate to any parent of this root. By default, the `path` parameter acts as the root.
 #' Use `NULL` to allow the user to navigate the entire filesystem.
