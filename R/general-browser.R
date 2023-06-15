@@ -89,19 +89,7 @@ general_browser_server <- function(
       clear_selection_on_navigate_r <- make_reactive(clear_selection_on_navigate)
 
       shiny::observeEvent(path_r(), ignoreNULL = FALSE, {
-        if (type == "file") {
-          initial_path <- make_path(path_r())
-        } else if (type == "path") {
-          if (!is.null(names(path_r()))) {
-            stop("Paths cannot be named lists, consider using `list_selector` instead of `path_browser`.")
-          }
-          if (any(grepl("^/+", path_r()))) {
-            stop("Paths should not begin with a slash.")
-          }
-          initial_path <- ""
-        } else if (type == "list") {
-          initial_path <- ""
-        }
+        initial_path <- get_initial_path(path = path_r(), type = type)
         wd(initial_path)
         selected(NULL)
       })
@@ -114,32 +102,6 @@ general_browser_server <- function(
         }
       })
 
-      is_legal_path <- function(path) {
-        if (real_fs) {
-          is.null(root_r()) || is_subdir(root_r(), path)
-        } else {
-          TRUE
-        }
-      }
-
-      is_path <- function(path) {
-        if (real_fs) {
-          !is.na(suppressWarnings(file.info(path)$isdir))
-        } else {
-          is_end_path <- path %in% path_r()
-          is_parent_path <- sum(grepl(paste0(path, "/"), path_r(), fixed = TRUE)) > 0
-          is_end_path || is_parent_path
-        }
-      }
-
-      is_dir <- function(path) {
-        if (real_fs) {
-          suppressWarnings(file.info(path)$isdir)
-        } else {
-          !path %in% path_r()
-        }
-      }
-
       output$current_wd <- shiny::renderUI({
         if (!show_path_r()) return()
 
@@ -151,7 +113,7 @@ general_browser_server <- function(
 
         crumbs_html <- lapply(seq_along(crumbs), function(idx) {
           class <- "file-breadcrumb"
-          if (is_legal_path(names(crumbs[idx]))) {
+          if (is_legal_path(names(crumbs[idx]), root_r(), real_fs)) {
             class <- paste(class, "file-breadcrumb-clickable")
           }
 
@@ -250,15 +212,15 @@ general_browser_server <- function(
       })
 
       shiny::observeEvent(input$file_clicked, {
-        if (!is_legal_path(input$file_clicked)) {
+        if (!is_legal_path(input$file_clicked, root_r(), real_fs)) {
           return()
         }
 
-        if (!is_path(input$file_clicked)) {
+        if (!is_path(input$file_clicked, real_fs, path_r())) {
           return()
         }
 
-        if (is_dir(input$file_clicked)) {
+        if (is_dir(input$file_clicked, real_fs, path_r())) {
           wd( input$file_clicked )
           if (clear_selection_on_navigate_r()) {
             selected(NULL)

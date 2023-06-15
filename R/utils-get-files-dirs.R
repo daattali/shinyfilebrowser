@@ -8,6 +8,48 @@ is_subdir <- function(parent, child) {
   startsWith(child, parent)
 }
 
+get_initial_path <- function(path, type) {
+  if (type == "file") {
+    make_path(path)
+  } else if (type == "path") {
+    if (!is.null(names(path))) {
+      stop("Paths cannot be named lists, consider using `list_selector` instead of `path_browser`.")
+    }
+    if (any(grepl("^/+", path))) {
+      stop("Paths should not begin with a slash.")
+    }
+    ""
+  } else if (type == "list") {
+    ""
+  }
+}
+
+is_legal_path <- function(path, root, real_fs) {
+  if (real_fs) {
+    is.null(root) || is_subdir(root, path)
+  } else {
+    TRUE
+  }
+}
+
+is_path <- function(path, real_fs, all_paths) {
+  if (real_fs) {
+    !is.na(suppressWarnings(file.info(path)$isdir))
+  } else {
+    is_end_path <- path %in% all_paths
+    is_parent_path <- sum(grepl(paste0(path, "/"), all_paths, fixed = TRUE)) > 0
+    is_end_path || is_parent_path
+  }
+}
+
+is_dir <- function(path, real_fs, all_paths) {
+  if (real_fs) {
+    suppressWarnings(file.info(path)$isdir)
+  } else {
+    !path %in% all_paths
+  }
+}
+
 get_files_dirs_real <- function(path, extensions = NULL, hidden = FALSE, root = NULL) {
   files <- list.files(path = path, all.files = hidden, full.names = TRUE, recursive = FALSE, no.. = TRUE)
   dirs <- list.dirs(path = path, full.names = TRUE, recursive = FALSE)
