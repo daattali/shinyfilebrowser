@@ -200,6 +200,9 @@ general_browser_server <- function(
         files_rows <- lapply(files_dirs$files, function(file) {
           if (real_fs) {
             size <- suppressWarnings(file.info(file)$size)
+            if (is.na(size)) {
+              return(NULL)
+            }
             if (size == 0 && !include_empty_r()) {
               return(NULL)
             }
