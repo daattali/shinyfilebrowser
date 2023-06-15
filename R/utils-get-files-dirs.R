@@ -9,12 +9,12 @@ is_subdir <- function(parent, child) {
 }
 
 get_initial_path <- function(path, type) {
-  if (type == "file") {
+  if (type == BROWSER_TYPE_FILE) {
     if (!dir.exists(path)) {
       stop("file_browser: Initial path does not exist: ", path)
     }
     make_path(path)
-  } else if (type == "path") {
+  } else if (type == BROWSER_TYPE_PATH) {
     if (!is.null(names(path))) {
       stop("path_browser: Paths cannot be named lists, consider using `list_selector` instead.")
     }

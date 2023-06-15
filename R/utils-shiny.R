@@ -1,7 +1,12 @@
-FILEBROWSER_TYPE_PARENT <- "parent"
-FILEBROWSER_TYPE_DIR <- "dir"
-FILEBROWSER_TYPE_FILE <- "file"
-FILEBROWSER_TYPES <- c(FILEBROWSER_TYPE_PARENT, FILEBROWSER_TYPE_DIR, FILEBROWSER_TYPE_FILE)
+BROWSER_TYPE_FILE <- "file"
+BROWSER_TYPE_PATH <- "path"
+BROWSER_TYPE_LIST <- "list"
+BROWSER_TYPES <- c(BROWSER_TYPE_FILE, BROWSER_TYPE_PATH, BROWSER_TYPE_LIST)
+
+FILE_TYPE_PARENT <- "parent"
+FILE_TYPE_DIR <- "dir"
+FILE_TYPE_FILE <- "file"
+FILE_TYPES <- c(FILE_TYPE_PARENT, FILE_TYPE_DIR, FILE_TYPE_FILE)
 
 make_reactive <- function(x) {
   if (shiny::is.reactive(x)) {
@@ -11,7 +16,7 @@ make_reactive <- function(x) {
   }
 }
 
-create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path),
+create_file_row <- function(type = FILE_TYPES, path, text = basename(path),
                             show_icons = TRUE, meta = NULL, active = FALSE, ns = shiny::NS(NULL)) {
   type <- match.arg(type)
 
@@ -21,11 +26,11 @@ create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path
 
   icon_div <- NULL
   if (show_icons) {
-    if (type == FILEBROWSER_TYPE_PARENT) {
+    if (type == FILE_TYPE_PARENT) {
       icon_type <- "arrow-left"
-    } else if (type == FILEBROWSER_TYPE_DIR) {
+    } else if (type == FILE_TYPE_DIR) {
       icon_type <- "folder"
-    } else if (type == FILEBROWSER_TYPE_FILE) {
+    } else if (type == FILE_TYPE_FILE) {
       icon_type <- "file-alt"
     }
     icon_div <- shiny::div(
@@ -56,4 +61,3 @@ create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path
 create_file_onclick <- function(new_path, ns = shiny::NS(NULL)) {
   paste0("Shiny.setInputValue('", ns('file_clicked'), "', '", new_path, "', {priority: 'event'})")
 }
-

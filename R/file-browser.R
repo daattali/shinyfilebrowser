@@ -56,7 +56,7 @@ file_browser_server <- function(
     text_empty = "No files here"
 ) {
   general_browser_server(
-    type = "file",
+    type = BROWSER_TYPE_FILE,
     id = id,
     path = path,
     extensions = extensions, root = root,

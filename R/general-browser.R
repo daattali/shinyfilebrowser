@@ -33,7 +33,7 @@ general_browser_ui <- function(id, height = NULL, width = "100%", bigger = FALSE
 }
 
 general_browser_server <- function(
-    type = c("file", "path", "list"),
+    type = BROWSER_TYPES,
     id,
     path,
     extensions = NULL,
@@ -52,13 +52,13 @@ general_browser_server <- function(
 
   type <- match.arg(type)
 
-  if (type == "file") {
+  if (type == BROWSER_TYPE_FILE) {
     return_path <- TRUE
     real_fs <- TRUE
-  } else if (type == "path") {
+  } else if (type == BROWSER_TYPE_PATH) {
     return_path <- TRUE
     real_fs <- FALSE
-  } else if (type == "list") {
+  } else if (type == BROWSER_TYPE_LIST) {
     return_path <- FALSE
     real_fs <- FALSE
   } else {
@@ -89,7 +89,7 @@ general_browser_server <- function(
       clear_selection_on_navigate_r <- make_reactive(clear_selection_on_navigate)
 
       shiny::observeEvent(root_r(), ignoreNULL = FALSE, {
-        if (type == "file") {
+        if (type == BROWSER_TYPE_FILE) {
           if (!is.null(root_r()) && !dir.exists(root_r())) {
             stop("file_browser: Root path does not exist: ", root_r())
           }
@@ -165,7 +165,7 @@ general_browser_server <- function(
         files_dirs <- get_files_dirs()
 
         dirs_rows <- lapply(files_dirs$dirs, function(dir) {
-          create_file_row(FILEBROWSER_TYPE_DIR, dir, show_icons = show_icons_r(), ns = ns)
+          create_file_row(FILE_TYPE_DIR, dir, show_icons = show_icons_r(), ns = ns)
         })
         files_rows <- lapply(files_dirs$files, function(file) {
           if (real_fs) {
@@ -199,7 +199,7 @@ general_browser_server <- function(
 
           active <- !is.null(selected()) && file == selected()
 
-          create_file_row(FILEBROWSER_TYPE_FILE, file, file_text, size, show_icons = show_icons_r(), active = active, ns = ns)
+          create_file_row(FILE_TYPE_FILE, file, file_text, size, show_icons = show_icons_r(), active = active, ns = ns)
         })
 
         dirs_rows <- drop_null(dirs_rows)
@@ -208,7 +208,7 @@ general_browser_server <- function(
         if (at_root()) {
           parent_row <- NULL
         } else {
-          parent_row <- create_file_row(FILEBROWSER_TYPE_PARENT, dirname(wd()), text_parent_r(), show_icons = show_icons_r(), ns = ns)
+          parent_row <- create_file_row(FILE_TYPE_PARENT, dirname(wd()), text_parent_r(), show_icons = show_icons_r(), ns = ns)
         }
 
         shiny::tagList(
