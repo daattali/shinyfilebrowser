@@ -38,6 +38,16 @@ path_browser_server <- function(
     text_parent = "..",
     text_empty = "No items here"
 ) {
+  if (!is.null(names(paths))) {
+    stop("path_browser: Paths cannot be named lists, consider using `list_selector` instead.")
+  }
+  if (any(grepl("^/+", paths))) {
+    stop("path_browser: Paths should not begin with a slash.")
+  }
+  if (!all(nzchar(paths))) {
+    stop("path_browser: Paths should not be empty.")
+  }
+
   general_browser_server(
     type = "path",
     id = id,

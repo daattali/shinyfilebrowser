@@ -11,15 +11,7 @@ is_subdir <- function(parent, child) {
 get_initial_path <- function(path, type) {
   if (type == "file") {
     make_path(path)
-  } else if (type == "path") {
-    if (!is.null(names(path))) {
-      stop("Paths cannot be named lists, consider using `list_selector` instead of `path_browser`.")
-    }
-    if (any(grepl("^/+", path))) {
-      stop("Paths should not begin with a slash.")
-    }
-    ""
-  } else if (type == "list") {
+  } else {
     ""
   }
 }

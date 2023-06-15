@@ -55,6 +55,13 @@ file_browser_server <- function(
     text_parent = "..",
     text_empty = "No files here"
 ) {
+  if (!dir.exists(path)) {
+    stop("file_browser: Initial path does not exist: ", path)
+  }
+  if (!is.null(root) && !dir.exists(root)) {
+    stop("file_browser: Root path does not exist: ", root)
+  }
+
   general_browser_server(
     type = "file",
     id = id,
