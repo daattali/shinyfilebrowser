@@ -9,14 +9,25 @@ is_subdir <- function(parent, child) {
 }
 
 get_files_dirs_real <- function(path, extensions = NULL, hidden = FALSE, root = NULL) {
-  all_files <- list.files(path = path, all.files = hidden, full.names = TRUE, recursive = FALSE, no.. = TRUE)
+  files <- list.files(path = path, all.files = hidden, full.names = TRUE, recursive = FALSE, no.. = TRUE)
+  dirs <- list.dirs(path = path, full.names = TRUE, recursive = FALSE)
 
-  if (!is.null(root)) {
-    all_files <- Filter(function(f) is_subdir(root, f), all_files)
+  # it's not possible to non-recursively get only files but no folders
+  files <- setdiff(files, dirs)
+
+  # there's no way to only get non-hidden directories, so need to manually filter those out
+  if (!hidden) {
+    dirs <- dirs[grep("^\\.", basename(dirs), invert = TRUE)]
   }
 
-  files <- Filter(function(f) suppressWarnings(!file.info(f)$isdir), all_files)
-  dirs <- Filter(function(f) suppressWarnings(file.info(f)$isdir), all_files)
+  # make sure we don't show files/dirs that are inaccessible (for example, a file linked
+  # to a parent folder we can't access. This happens in Windows, where the home dir has a
+  # link to Videos which is in the parent directory.)
+  if (!is.null(root)) {
+    files <- Filter(function(f) is_subdir(root, f), files)
+    dirs <- Filter(function(f) is_subdir(root, f), dirs)
+  }
+
   files <- make_path(sort(files))
   dirs <- make_path(sort(dirs))
 
