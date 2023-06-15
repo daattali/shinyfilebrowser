@@ -121,7 +121,7 @@ general_browser_server <- function(
 
         crumbs_html <- lapply(seq_along(crumbs), function(idx) {
           class <- "file-breadcrumb"
-          if (is_legal_path(names(crumbs[idx]), root_r(), real_fs)) {
+          if (is_legal_path(names(crumbs[idx]), real_fs, root_r())) {
             class <- paste(class, "file-breadcrumb-clickable")
           }
 
@@ -220,7 +220,7 @@ general_browser_server <- function(
       })
 
       shiny::observeEvent(input$file_clicked, {
-        if (!is_legal_path(input$file_clicked, root_r(), real_fs)) {
+        if (!is_legal_path(input$file_clicked, real_fs, root_r())) {
           return()
         }
 

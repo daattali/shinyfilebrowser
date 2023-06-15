@@ -30,7 +30,7 @@ get_initial_path <- function(path, type) {
   }
 }
 
-is_legal_path <- function(path, root, real_fs) {
+is_legal_path <- function(path, real_fs, root) {
   if (real_fs) {
     is.null(root) || is_subdir(root, path)
   } else {

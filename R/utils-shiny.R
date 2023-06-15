@@ -3,6 +3,14 @@ FILEBROWSER_TYPE_DIR <- "dir"
 FILEBROWSER_TYPE_FILE <- "file"
 FILEBROWSER_TYPES <- c(FILEBROWSER_TYPE_PARENT, FILEBROWSER_TYPE_DIR, FILEBROWSER_TYPE_FILE)
 
+make_reactive <- function(x) {
+  if (shiny::is.reactive(x)) {
+    x
+  } else {
+    shiny::reactive(x)
+  }
+}
+
 create_file_row <- function(type = FILEBROWSER_TYPES, path, text = basename(path),
                             show_icons = TRUE, meta = NULL, active = FALSE, ns = shiny::NS(NULL)) {
   type <- match.arg(type)
@@ -49,10 +57,3 @@ create_file_onclick <- function(new_path, ns = shiny::NS(NULL)) {
   paste0("Shiny.setInputValue('", ns('file_clicked'), "', '", new_path, "', {priority: 'event'})")
 }
 
-make_reactive <- function(x) {
-  if (shiny::is.reactive(x)) {
-    x
-  } else {
-    shiny::reactive(x)
-  }
-}
