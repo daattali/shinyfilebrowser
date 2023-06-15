@@ -2,6 +2,7 @@
 
 export(file_browser_server)
 export(file_browser_ui)
+export(get_drives)
 export(list_selector_server)
 export(list_selector_ui)
 export(path_browser_server)
