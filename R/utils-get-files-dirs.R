@@ -10,7 +10,21 @@ is_subdir <- function(parent, child) {
 
 get_initial_path <- function(path, type) {
   if (type == "file") {
+    if (!dir.exists(path)) {
+      stop("file_browser: Initial path does not exist: ", path)
+    }
     make_path(path)
+  } else if (type == "path") {
+    if (!is.null(names(path))) {
+      stop("path_browser: Paths cannot be named lists, consider using `list_selector` instead.")
+    }
+    if (any(grepl("^/+", path))) {
+      stop("path_browser: Paths should not begin with a slash.")
+    }
+    if (!all(nzchar(path))) {
+      stop("path_browser: Paths should not be empty.")
+    }
+    ""
   } else {
     ""
   }

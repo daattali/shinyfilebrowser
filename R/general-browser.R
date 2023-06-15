@@ -88,6 +88,14 @@ general_browser_server <- function(
       html_r <- make_reactive(html)
       clear_selection_on_navigate_r <- make_reactive(clear_selection_on_navigate)
 
+      shiny::observeEvent(root_r(), ignoreNULL = FALSE, {
+        if (type == "file") {
+          if (!is.null(root_r()) && !dir.exists(root_r())) {
+            stop("file_browser: Root path does not exist: ", root_r())
+          }
+        }
+      })
+
       shiny::observeEvent(path_r(), ignoreNULL = FALSE, {
         initial_path <- get_initial_path(path = path_r(), type = type)
         wd(initial_path)
