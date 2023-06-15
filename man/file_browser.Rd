@@ -38,7 +38,8 @@ file_browser_server(
 \item{path}{The initial path the file browser should show.}
 
 \item{extensions}{List of file extensions that should be shown, case-insensitive
-(e.g. \code{c("csv", "txt")}). If \code{NULL}, all file types are shown.}
+(e.g. \code{c("csv", "txt")}). If \code{NULL}, all file types are shown. If \code{""}, only
+folders and no files are shown.}
 
 \item{root}{The path that should be considered root, which means that the user cannot
 navigate to any parent of this root. By default, the \code{path} parameter acts as the root.
