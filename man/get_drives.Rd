@@ -2,12 +2,13 @@
 % Please edit documentation in R/get_drives.R
 \name{get_drives}
 \alias{get_drives}
-\title{Get the drives on the current machine (Windows only)}
+\title{Get the drives on the current machine}
 \usage{
 get_drives()
 }
 \value{
-On Windows, the names of available drives. On non-Windows, \code{NULL}.
+On Windows: the names of available drives. On non-Windows machines: the root
+path \code{"/"} is returned.
 }
 \description{
 On Windows machines, the standard drive is \verb{C:/}, but there may be other drives.

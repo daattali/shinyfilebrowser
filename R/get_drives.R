@@ -1,9 +1,10 @@
-#' Get the drives on the current machine (Windows only)
+#' Get the drives on the current machine
 #'
 #' On Windows machines, the standard drive is `C:/`, but there may be other drives.
 #' You can use this function to allow [`file_browser()`] to browse in other drives.
 #'
-#' @return On Windows, the names of available drives. On non-Windows, `NULL`.
+#' @return On Windows: the names of available drives. On non-Windows machines: the root
+#' path `"/"` is returned.
 #' @examples
 #' if (interactive()) {
 #'
@@ -52,6 +53,6 @@ get_drives <- function() {
   if (Sys.info()["sysname"] == "Windows") {
     names(which(sapply(paste0(LETTERS, ":/"), dir.exists)))
   } else {
-    NULL
+    "/"
   }
 }

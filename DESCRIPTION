@@ -1,6 +1,6 @@
 Package: shinyfilebrowser
 Title: File Browser and List Selector for 'Shiny' Apps
-Version: 0.0.0.9011
+Version: 0.0.0.9012
 Authors@R: c(
     person("Dean", "Attali",
         email = "daattali@gmail.com",
