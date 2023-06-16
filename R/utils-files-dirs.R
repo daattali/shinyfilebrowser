@@ -63,7 +63,8 @@ is_dir <- function(path, type, all_paths) {
 
 at_root <- function(wd, type, root) {
   if (is_real_fs(type)) {
-    !is.null(wd) && !is.null(root) && make_path(wd) == make_path(root)
+    (!is.null(wd) && !is.null(root) && make_path(wd) == make_path(root)) ||
+      (is.null(root) && make_path(dirname(wd)) == make_path(wd))
   } else {
     !is.null(wd) && wd == ""
   }

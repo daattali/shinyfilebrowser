@@ -88,11 +88,13 @@ make_file_list_ui <- function(wd, type, paths = NULL, root = NULL, extensions = 
                               show_size = TRUE, show_extension = TRUE,
                               text_parent = "", text_empty = "", html = FALSE,
                               selected = NULL, ns = shiny::NS(NULL)) {
+
   files_dirs <- get_files_dirs(wd = wd, type = type, paths = paths, root = root, extensions = extensions, hidden = hidden)
 
   dirs_rows <- lapply(files_dirs$dirs, function(dir) {
     create_file_row(FILE_TYPE_DIR, dir, show_icons = show_icons, ns = ns)
   })
+
   files_rows <- lapply(files_dirs$files, function(file) {
     if (is_real_fs(type)) {
       size <- suppressWarnings(file.info(file)$size)
