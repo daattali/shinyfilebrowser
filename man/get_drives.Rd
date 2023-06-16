@@ -45,7 +45,7 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   path <- reactive({
-    if (input$drive == "C:/") {
+    if (input$drive == "C:/" || input$drive == "/") {
       "~"
     } else {
       input$drive
