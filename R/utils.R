@@ -13,9 +13,13 @@ fill_names <- function(x) {
   x
 }
 
-make_breadcrumbs <- function(path, include_root = TRUE) {
+make_breadcrumbs <- function(path, type = BROWSER_TYPE_FILE, include_root = TRUE) {
   if (path == "") {
-    return(character(0))
+    if (is_real_fs(type)) {
+      return(character(0))
+    } else {
+      return(stats::setNames("Home", ""))
+    }
   }
 
   parts <- c()
@@ -48,5 +52,11 @@ make_breadcrumbs <- function(path, include_root = TRUE) {
     parts <- c(stats::setNames(name, path), parts)
     path <- parent
   }
+
+  if (!is_real_fs(type)) {
+    home_crumb <- stats::setNames("Home", "")
+    parts <- c(home_crumb, parts)
+  }
+
   parts
 }

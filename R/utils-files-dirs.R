@@ -2,6 +2,11 @@ make_path <- function(path) {
   suppressWarnings(normalizePath(path, winslash = "/"))
 }
 
+is_real_fs <- function(type) {
+  stopifnot(type %in% BROWSER_TYPES)
+  type == BROWSER_TYPE_FILE
+}
+
 is_subdir <- function(parent, child) {
   parent <- make_path(parent)
   child <- make_path(child)
@@ -30,16 +35,16 @@ get_initial_path <- function(path, type) {
   }
 }
 
-is_legal_path <- function(path, real_fs, root) {
-  if (real_fs) {
+is_legal_path <- function(path, type, root) {
+  if (is_real_fs(type)) {
     is.null(root) || is_subdir(root, path)
   } else {
     TRUE
   }
 }
 
-is_path <- function(path, real_fs, all_paths) {
-  if (real_fs) {
+is_path <- function(path, type, all_paths) {
+  if (is_real_fs(type)) {
     !is.na(suppressWarnings(file.info(path)$isdir))
   } else {
     is_end_path <- path %in% all_paths
@@ -48,11 +53,35 @@ is_path <- function(path, real_fs, all_paths) {
   }
 }
 
-is_dir <- function(path, real_fs, all_paths) {
-  if (real_fs) {
+is_dir <- function(path, type, all_paths) {
+  if (is_real_fs(type)) {
     suppressWarnings(file.info(path)$isdir)
   } else {
     !path %in% all_paths
+  }
+}
+
+at_root <- function(wd, type, root) {
+  if (is_real_fs(type)) {
+    !is.null(wd) && !is.null(root) && make_path(wd) == make_path(root)
+  } else {
+    !is.null(wd) && wd == ""
+  }
+}
+
+get_files_dirs <- function(wd, type, paths = NULL, root = NULL, extensions = NULL, hidden = FALSE) {
+  if (type == BROWSER_TYPE_FILE) {
+    get_files_dirs_real(path = wd, extensions = extensions, hidden = hidden, root = root)
+  } else {
+    if (is.null(paths)) {
+      list(files = character(0), dirs = character(0))
+    } else {
+      if (type == BROWSER_TYPE_PATH) {
+        get_files_dirs_fake(path = wd, paths = paths)
+      } else {
+        list(files = fill_names(paths), dirs = character(0))
+      }
+    }
   }
 }
 

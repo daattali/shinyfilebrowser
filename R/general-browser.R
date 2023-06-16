@@ -52,19 +52,6 @@ general_browser_server <- function(
 
   type <- match.arg(type)
 
-  if (type == BROWSER_TYPE_FILE) {
-    return_path <- TRUE
-    real_fs <- TRUE
-  } else if (type == BROWSER_TYPE_PATH) {
-    return_path <- TRUE
-    real_fs <- FALSE
-  } else if (type == BROWSER_TYPE_LIST) {
-    return_path <- FALSE
-    real_fs <- FALSE
-  } else {
-    stop("Unexpected general_browser_server type: ", type)
-  }
-
   shiny::moduleServer(
     id,
     function(input, output, session) {
@@ -102,133 +89,34 @@ general_browser_server <- function(
         selected(NULL)
       })
 
-      list_values <- shiny::reactive({
-        if (type == "list") {
-          fill_names(path_r())
-        } else {
-          NULL
-        }
-      })
-
       output$current_wd <- shiny::renderUI({
         if (!show_path_r()) return()
-
-        crumbs <- make_breadcrumbs(wd())
-        if (!real_fs) {
-          home_crumb <- stats::setNames("Home", "")
-          crumbs <- c(home_crumb, crumbs)
-        }
-
-        crumbs_html <- lapply(seq_along(crumbs), function(idx) {
-          class <- "file-breadcrumb"
-          if (is_legal_path(names(crumbs[idx]), real_fs, root_r())) {
-            class <- paste(class, "file-breadcrumb-clickable")
-          }
-
-          shiny::tagList(
-            if (idx > 1) shiny::span(shiny::HTML("&rsaquo;"), class = "file-breadcrumb-separator"),
-            shiny::span(
-              unname(crumbs[idx]),
-              onclick = create_file_onclick(names(crumbs[idx]), ns = ns),
-              class = class
-            )
-          )
-        })
-        shiny::div(crumbs_html, class = "current-wd-breadcrumbs")
-      })
-
-      at_root <- shiny::reactive({
-        if (real_fs) {
-          !is.null(wd()) && !is.null(root_r()) && make_path(wd()) == make_path(root_r())
-        } else {
-          !is.null(wd()) && wd() == ""
-        }
-      })
-
-      get_files_dirs <- shiny::reactive({
-        if (real_fs) {
-          get_files_dirs_real(path = wd(), extensions = extensions_r(), hidden = include_hidden_r(), root = root_r())
-        } else {
-          if (is.null(path_r())) {
-            list(files = character(0), dirs = character(0))
-          } else if (is.null(list_values())) {
-            get_files_dirs_fake(path = wd(), paths = path_r())
-          } else {
-            list(files = list_values(), dirs = character(0))
-          }
-        }
+        make_breadcrumbs_ui(wd = wd(), type = type, root = root_r(), ns = ns)
       })
 
       output$file_list <- shiny::renderUI({
         shiny::removeUI(selector = paste0("#", ns("loader")))
 
-        files_dirs <- get_files_dirs()
-
-        dirs_rows <- lapply(files_dirs$dirs, function(dir) {
-          create_file_row(FILE_TYPE_DIR, dir, show_icons = show_icons_r(), ns = ns)
-        })
-        files_rows <- lapply(files_dirs$files, function(file) {
-          if (real_fs) {
-            size <- suppressWarnings(file.info(file)$size)
-            if (is.na(size)) {
-              return(NULL)
-            }
-            if (size == 0 && !include_empty_r()) {
-              return(NULL)
-            }
-
-            if (show_size_r()) {
-              size <- natural_size(size)
-            } else {
-              size <- NULL
-            }
-          } else {
-            size <- NULL
-          }
-
-          if (!is.null(list_values())) {
-            file_text <- names(which(list_values() == file))[1]
-            if (html_r()) {
-              file_text <- shiny::HTML(file_text)
-            }
-          } else if (show_extension_r()) {
-            file_text <- basename(file)
-          } else {
-            file_text <- tools::file_path_sans_ext(basename(file))
-          }
-
-          active <- !is.null(selected()) && file == selected()
-
-          create_file_row(FILE_TYPE_FILE, file, file_text, size, show_icons = show_icons_r(), active = active, ns = ns)
-        })
-
-        dirs_rows <- drop_null(dirs_rows)
-        files_rows <- drop_null(files_rows)
-
-        if (at_root()) {
-          parent_row <- NULL
-        } else {
-          parent_row <- create_file_row(FILE_TYPE_PARENT, dirname(wd()), text_parent_r(), show_icons = show_icons_r(), ns = ns)
-        }
-
-        shiny::tagList(
-          parent_row,
-          dirs_rows,
-          files_rows,
-          if (length(dirs_rows) == 0 && length(files_rows) == 0) shiny::div(class = "file-empty", text_empty_r())
+        make_file_list_ui(
+          wd = wd(), type = type, paths = path_r(), root = root_r(),
+          extensions = extensions_r(), hidden = include_hidden_r(),
+          show_icons = show_icons_r(), include_empty = include_empty_r(),
+          show_size = show_size_r(), show_extension = show_extension_r(),
+          text_parent = text_parent_r(), text_empty = text_empty_r(), html = html_r(),
+          selected = selected(), ns = ns
         )
       })
 
       shiny::observeEvent(input$file_clicked, {
-        if (!is_legal_path(input$file_clicked, real_fs, root_r())) {
+        if (!is_legal_path(input$file_clicked, type, root_r())) {
           return()
         }
 
-        if (!is_path(input$file_clicked, real_fs, path_r())) {
+        if (!is_path(input$file_clicked, type, path_r())) {
           return()
         }
 
-        if (is_dir(input$file_clicked, real_fs, path_r())) {
+        if (is_dir(input$file_clicked, type, path_r())) {
           wd( input$file_clicked )
           if (clear_selection_on_navigate_r()) {
             selected(NULL)
@@ -241,6 +129,8 @@ general_browser_server <- function(
           }
         }
       })
+
+      return_path <- (type != BROWSER_TYPE_LIST)
 
       if (return_path) {
         return(list(
